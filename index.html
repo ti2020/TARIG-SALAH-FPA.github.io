@@ -1,65 +1,56 @@
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarig Salah | Finance Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-[#0f172a] antialiased">
 
-export default function Home() {
-  return (
-    <div className="pt-32">
-      {/* Hero Section */}
-      <section id="experience" className="max-w-7xl mx-auto px-6 md:px-12 py-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="max-w-4xl"
-        >
-          <h2 className="text-7xl md:text-8xl font-[900] tracking-tight mb-8 leading-[0.9] text-slate-900">
-            Financial <br/><span className="text-blue-700 italic">Intelligence.</span>
-          </h2>
-          <p className="text-xl text-slate-500 font-medium max-w-2xl leading-relaxed mb-12 italic">
-            Strategic financial modelling and market entry research for institutional investors in the MENA region.
-          </p>
-
-          <a 
-            href="https://read.litera-reader.com/?source=8bb3d4bdfe46bd3d3dd0b48d3ac2d3a7f9a4ad2fc301cdb99195ac381d4104aa&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=1e38b8ee3f6b7bf015b6b9e72d4ab8d8bf4c4953ec8a77a8a600609b920eb365" 
-            target="_blank" 
-            className="inline-flex items-center gap-4 bg-blue-700 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-800 transition shadow-2xl shadow-blue-200"
-          >
-            Interactive CV (Litera)
-          </a>
-        </motion.div>
-      </section>
-
-      {/* Projects Grid */}
-      <section id="projects" className="max-w-7xl mx-auto px-6 md:px-12 py-24 border-t border-slate-200">
-        <h3 className="text-3xl font-[900] tracking-tight mb-16 uppercase italic">Project Portfolio</h3>
-        
-        <div className="grid md:grid-cols-2 gap-10">
-          <ProjectCard 
-            title="Institutional DCF Model"
-            desc="Comprehensive 5-year valuation for tech equity with scenario analysis."
-            literaLink="#"
-            driveLink="#"
-          />
-          <ProjectCard 
-            title="Vision 2030 Analysis"
-            desc="Strategic market entry report focusing on Saudi logistics sectors."
-            literaLink="#"
-            driveLink="#"
-          />
+    <nav class="max-w-7xl mx-auto px-8 py-10 flex justify-between items-center">
+        <div class="flex flex-col">
+            <h1 class="text-2xl font-[900] tracking-tighter uppercase leading-none">Tarig Salah</h1>
+            <span class="text-[10px] font-bold text-blue-600 tracking-[0.4em] uppercase mt-1 text-center">Clarity & Impact</span>
         </div>
-      </section>
-    </div>
-  );
-}
+        <div class="flex gap-8 items-center font-bold text-sm">
+            <a href="https://www.linkedin.com/in/tarig97" target="_blank" class="hover:text-blue-700 transition">LinkedIn</a>
+            <a href="mailto:Tarig.salah@outlook.com" class="bg-[#0f172a] text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">Contact</a>
+        </div>
+    </nav>
 
-function ProjectCard({ title, desc, literaLink, driveLink }) {
-  return (
-    <div className="bg-white p-10 rounded-[3rem] border border-slate-200 hover:border-blue-700 transition-all hover:shadow-2xl">
-      <h4 className="text-3xl font-black mb-4 uppercase">{title}</h4>
-      <p className="text-slate-500 font-medium mb-10 italic text-sm">{desc}</p>
-      <div className="flex gap-4">
-        <a href={literaLink} target="_blank" className="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition">Litera View</a>
-        <a href={driveLink} target="_blank" className="flex-1 border-2 border-slate-200 text-slate-900 text-center py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition">Download .xlsx</a>
-      </div>
-    </div>
-  );
-}
+    <section class="max-w-7xl mx-auto px-8 py-20">
+        <h2 class="text-7xl md:text-8xl font-[900] tracking-tight mb-8 leading-[0.9]">
+            Financial <br><span class="text-blue-700">Intelligence.</span>
+        </h2>
+        <p class="text-xl text-slate-500 font-medium max-w-2xl leading-relaxed mb-12 italic">
+            Strategic financial modelling and market entry research for institutional investors in the MENA region.
+        </p>
+
+        <a href="https://read.litera-reader.com/?source=8bb3d4bdfe46bd3d3dd0b48d3ac2d3a7f9a4ad2fc301cdb99195ac381d4104aa&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=1e38b8ee3f6b7bf015b6b9e72d4ab8d8bf4c4953ec8a77a8a600609b920eb365" 
+           target="_blank" 
+           class="inline-flex items-center gap-4 bg-blue-700 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-800 transition shadow-2xl shadow-blue-200">
+            View Interactive CV
+        </a>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-8 py-24 border-t border-slate-200">
+        <h3 class="text-3xl font-[900] tracking-tight mb-16 uppercase italic">Project Portfolio</h3>
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="bg-white p-10 rounded-[3rem] border border-slate-200 hover:border-blue-700 transition-all shadow-sm hover:shadow-xl">
+                <h4 class="text-3xl font-black mb-4 uppercase text-center">Institutional DCF Model</h4>
+                <p class="text-slate-500 font-medium mb-10 italic text-sm text-center">Comprehensive 5-year valuation with scenario analysis.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="flex-1 bg-[#0f172a] text-white text-center py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition">Litera View</a>
+                    <a href="#" class="flex-1 border-2 border-slate-200 text-[#0f172a] text-center py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition">Download .xlsx</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
