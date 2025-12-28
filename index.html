@@ -1,44 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarig Salah Elmubarak | Portfolio</title>
-    <link href="output.css" rel="stylesheet">
-</head>
-<body class="bg-slate-50 text-slate-900 font-sans">
+import { motion } from "framer-motion";
 
-    <nav class="max-w-5xl mx-auto p-6 flex justify-between items-center">
-        <span class="font-black text-xl tracking-tighter uppercase">Tarig Salah</span>
-        <div class="space-x-6">
-            <a href="https://www.linkedin.com/in/tarig97" target="_blank" class="text-sm font-bold hover:text-blue-700">LinkedIn</a>
-            <a href="mailto:Tarig.salah@outlook.com" class="text-sm font-bold hover:text-blue-700">Contact</a>
+export default function Home() {
+  return (
+    <div className="pt-32">
+      {/* Hero Section */}
+      <section id="experience" className="max-w-7xl mx-auto px-6 md:px-12 py-20">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl"
+        >
+          <h2 className="text-7xl md:text-8xl font-[900] tracking-tight mb-8 leading-[0.9] text-slate-900">
+            Financial <br/><span className="text-blue-700 italic">Intelligence.</span>
+          </h2>
+          <p className="text-xl text-slate-500 font-medium max-w-2xl leading-relaxed mb-12 italic">
+            Strategic financial modelling and market entry research for institutional investors in the MENA region.
+          </p>
+
+          <a 
+            href="https://read.litera-reader.com/?source=8bb3d4bdfe46bd3d3dd0b48d3ac2d3a7f9a4ad2fc301cdb99195ac381d4104aa&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=1e38b8ee3f6b7bf015b6b9e72d4ab8d8bf4c4953ec8a77a8a600609b920eb365" 
+            target="_blank" 
+            className="inline-flex items-center gap-4 bg-blue-700 text-white px-10 py-5 rounded-2xl font-black text-xl hover:bg-blue-800 transition shadow-2xl shadow-blue-200"
+          >
+            Interactive CV (Litera)
+          </a>
+        </motion.div>
+      </section>
+
+      {/* Projects Grid */}
+      <section id="projects" className="max-w-7xl mx-auto px-6 md:px-12 py-24 border-t border-slate-200">
+        <h3 className="text-3xl font-[900] tracking-tight mb-16 uppercase italic">Project Portfolio</h3>
+        
+        <div className="grid md:grid-cols-2 gap-10">
+          <ProjectCard 
+            title="Institutional DCF Model"
+            desc="Comprehensive 5-year valuation for tech equity with scenario analysis."
+            literaLink="#"
+            driveLink="#"
+          />
+          <ProjectCard 
+            title="Vision 2030 Analysis"
+            desc="Strategic market entry report focusing on Saudi logistics sectors."
+            literaLink="#"
+            driveLink="#"
+          />
         </div>
-    </nav>
+      </section>
+    </div>
+  );
+}
 
-    <header class="max-w-5xl mx-auto pt-20 pb-16 px-6">
-        <h1 class="text-6xl font-black text-slate-900 mb-6">Finance & Data <br><span class="text-blue-700">Expert.</span></h1>
-        <p class="text-xl text-slate-600 max-w-xl mb-10">
-            Specialized in Financial Modelling and Market Research within the MENA region.
-        </p>
-
-        <div class="flex flex-wrap gap-4">
-            <a href="https://read.litera-reader.com/?source=705a85088efba920e2b93f44fb0325905135f30271a244b04f10de6c2f9e9ced&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=0dcf9fec2beba80d2210f7e2aadc95e1f22c4a45bbe77ce13491226741e816e5" 
-               target="_blank" 
-               class="bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-800 transition shadow-lg shadow-blue-200">
-               View Interactive CV ↗
-            </a>
-            
-            <a href="mailto:Tarig.salah@outlook.com" 
-               class="bg-white text-slate-900 border-2 border-slate-200 px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition">
-               Get in Touch
-            </a>
-        </div>
-    </header>
-
-    <footer class="max-w-5xl mx-auto p-6 mt-20 border-t border-slate-200 text-slate-400 text-sm">
-        <p>&copy; 2025 Tarig Salah Elmubarak</p>
-    </footer>
-
-</body>
-</html>
+function ProjectCard({ title, desc, literaLink, driveLink }) {
+  return (
+    <div className="bg-white p-10 rounded-[3rem] border border-slate-200 hover:border-blue-700 transition-all hover:shadow-2xl">
+      <h4 className="text-3xl font-black mb-4 uppercase">{title}</h4>
+      <p className="text-slate-500 font-medium mb-10 italic text-sm">{desc}</p>
+      <div className="flex gap-4">
+        <a href={literaLink} target="_blank" className="flex-1 bg-slate-900 text-white text-center py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition">Litera View</a>
+        <a href={driveLink} target="_blank" className="flex-1 border-2 border-slate-200 text-slate-900 text-center py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition">Download .xlsx</a>
+      </div>
+    </div>
+  );
+}
