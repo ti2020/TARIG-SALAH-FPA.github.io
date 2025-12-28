@@ -11,8 +11,9 @@
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         .hero-gradient { background: radial-gradient(circle at top right, #eff6ff 0%, #f8fafc 100%); }
         .base44-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05); }
+        /* This creates the floating effect from Base44 */
         .hover-lift { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .hover-lift:hover { transform: translateY(-8px); shadow: 0 30px 60px -12px rgba(29, 78, 216, 0.15); }
+        .hover-lift:hover { transform: translateY(-8px); filter: drop-shadow(0 20px 30px rgba(29, 78, 216, 0.2)); }
     </style>
 </head>
 <body class="hero-gradient text-[#0f172a] antialiased min-h-screen">
@@ -30,15 +31,15 @@
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-8 pt-48 pb-24">
+    <main class="max-w-7xl mx-auto px-8 pt-48 pb-24 text-center md:text-left">
         
         <section class="mb-32">
-            <h2 class="text-[clamp(3.5rem,10vw,8rem)] font-[900] tracking-tight mb-10 leading-[0.85] text-slate-900">
+            <h2 class="text-[clamp(3rem,8vw,7rem)] font-[900] tracking-tight mb-10 leading-[0.85] text-slate-900">
                 Financial <br><span class="text-blue-700 relative inline-block">Intelligence.
                     <span class="absolute -bottom-2 left-0 w-full h-2 bg-blue-100 -z-10"></span>
                 </span>
             </h2>
-            <p class="text-xl md:text-2xl text-slate-500 font-medium max-w-2xl leading-relaxed mb-16 italic">
+            <p class="text-xl md:text-2xl text-slate-500 font-medium max-w-2xl leading-relaxed mb-16 italic mx-auto md:mx-0">
                 Strategic financial modelling and market entry research for institutional investors in the MENA region.
             </p>
 
@@ -54,33 +55,37 @@
             <h3 class="text-xs font-black uppercase tracking-[0.5em] text-slate-400 mb-16">Selected Case Studies</h3>
             <div class="grid md:grid-cols-2 gap-12">
                 
-                <div class="hover-lift bg-white p-12 rounded-[3.5rem] border border-slate-100 base44-shadow">
+                <div class="hover-lift bg-white p-12 rounded-[3.5rem] border border-slate-100 base44-shadow text-left">
                     <div class="mb-8">
                         <span class="bg-blue-50 text-blue-700 text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest leading-none">Institutional Valuation</span>
                     </div>
                     <h4 class="text-4xl font-[900] mb-6 tracking-tight">DCF Framework</h4>
-                    <p class="text-slate-500 font-medium mb-12 text-lg italic">Comprehensive 5-year valuation with sensitivity analysis for high-growth startups.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="flex-1 bg-[#0f172a] text-white text-center py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition shadow-lg">Litera View</a>
-                        <a href="#" class="flex-1 border-2 border-slate-100 text-[#0f172a] text-center py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition">Download .xlsx</a>
+                    <p class="text-slate-500 font-medium mb-12 text-lg italic leading-relaxed">Comprehensive 5-year valuation with sensitivity analysis for high-growth startups.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="flex-1 min-w-[140px] bg-[#0f172a] text-white text-center py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition shadow-lg">Litera View</a>
+                        <a href="#" class="flex-1 min-w-[140px] border-2 border-slate-100 text-[#0f172a] text-center py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition">Download .xlsx</a>
                     </div>
                 </div>
 
-                <div class="hover-lift bg-white p-12 rounded-[3.5rem] border border-slate-100 base44-shadow">
+                <div class="hover-lift bg-white p-12 rounded-[3.5rem] border border-slate-100 base44-shadow text-left">
                     <div class="mb-8">
                         <span class="bg-emerald-50 text-emerald-700 text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest leading-none">Market Research</span>
                     </div>
                     <h4 class="text-4xl font-[900] mb-6 tracking-tight">KSA Vision 2030</h4>
-                    <p class="text-slate-500 font-medium mb-12 text-lg italic">Strategic outlook on logistics and infrastructure development in Saudi Arabia.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="flex-1 bg-[#0f172a] text-white text-center py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition shadow-lg">Read Paper</a>
-                        <a href="#" class="flex-1 border-2 border-slate-100 text-[#0f172a] text-center py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition">Download PDF</a>
+                    <p class="text-slate-500 font-medium mb-12 text-lg italic leading-relaxed">Strategic outlook on logistics and infrastructure development in Saudi Arabia.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="flex-1 min-w-[140px] bg-[#0f172a] text-white text-center py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition shadow-lg">Read Paper</a>
+                        <a href="#" class="flex-1 min-w-[140px] border-2 border-slate-100 text-[#0f172a] text-center py-5 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-50 transition">Download PDF</a>
                     </div>
                 </div>
 
             </div>
         </section>
     </main>
+
+    <footer class="max-w-7xl mx-auto px-8 py-20 border-t border-slate-200 text-center">
+        <p class="text-slate-400 font-bold text-[10px] uppercase tracking-[0.3em]">© 2025 Tarig Salah Elmubarak | Clarity & Impact Architecture</p>
+    </footer>
 
 </body>
 </html>
