@@ -1,73 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Vault | Tarig Salah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; }
-        .hover-lift { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .hover-lift:hover { transform: translateY(-8px); filter: drop-shadow(0 20px 30px rgba(29, 78, 216, 0.1)); }
-    </style>
-</head>
-<body class="antialiased">
+<section class="max-w-7xl mx-auto px-8 py-24 border-t border-slate-200">
+    <div class="mb-16">
+        <h3 class="text-3xl font-[900] uppercase italic text-slate-900">Market <span class="text-blue-700">Feedback</span></h3>
+        <p class="text-slate-500 font-medium italic mt-2">Validation from institutional partners and project stakeholders.</p>
+    </div>
 
-    <nav class="max-w-7xl mx-auto px-8 py-10 flex justify-between items-center border-b border-slate-100 mb-16">
-        <a href="index.html" class="flex flex-col group">
-            <h1 class="text-xl font-[900] tracking-tighter uppercase leading-none group-hover:text-blue-700 transition">Tarig Salah</h1>
-            <span class="text-[9px] font-bold text-slate-400 tracking-[0.4em] uppercase mt-1">← Return to Main Terminal</span>
-        </a>
-        <a href="mailto:Tarig.salah@outlook.com" class="bg-[#0f172a] text-white px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-blue-700 transition-all">Contact</a>
-    </nav>
-
-    <section class="max-w-7xl mx-auto px-8 py-10">
-        <div class="mb-12 flex justify-between items-end">
-            <div>
-                <h3 class="text-3xl font-[900] uppercase italic text-slate-900">Live <span class="text-blue-700">Terminal</span></h3>
-                <p class="text-slate-500 font-medium italic mt-2 text-lg">Real-time data engine: Financial drivers & market assumptions.</p>
-            </div>
-            <div class="flex items-center gap-3 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-100">
-                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span class="text-[9px] font-black text-emerald-700 uppercase pt-0.5 tracking-widest">Live Sync Active</span>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+        
+        <div class="group p-8 rounded-[3rem] bg-white border border-slate-100 hover-lift relative overflow-hidden">
+            <div class="flex flex-col items-center text-center">
+                <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mb-6 ring-4 ring-slate-50 transition-all duration-700 group-hover:ring-blue-100">
+                    <img src="client-photo-1.jpg" 
+                         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100" 
+                         alt="Client Name">
+                </div>
+                
+                <p class="text-slate-500 italic font-medium leading-relaxed mb-8">
+                    "Tarig's ability to translate complex MENA market dynamics into actionable financial models is world-class."
+                </p>
+                
+                <div>
+                    <h4 class="font-[900] uppercase text-[10px] tracking-widest text-slate-900">Managing Director</h4>
+                    <p class="text-blue-600 font-black text-[9px] uppercase tracking-[0.2em] mt-1 text-slate-400">Regional Investment Fund</p>
+                </div>
             </div>
         </div>
 
-        <div class="bg-[#0f172a] p-3 rounded-[3rem] shadow-2xl border-8 border-slate-800">
-            <div class="bg-white rounded-[2.2rem] overflow-hidden aspect-video">
-                <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdABYRPxPdzuhWPbv1ZuxONXrVVRI1JrmbFORIhsld1zCRgO5fpD4PXIf04SANhFhnMvirVN8Ypr_z/pubhtml?widget=true&amp;headers=false&amp;chrome=false" 
-                        class="w-full h-full border-none"></iframe>
-            </div>
         </div>
-    </section>
-
-    <section class="max-w-7xl mx-auto px-8 py-32 overflow-hidden group cursor-crosshair">
-        <div class="text-center mb-4">
-            <span class="text-[10px] font-black uppercase text-blue-600 tracking-[0.5em]">Institutional Experience</span>
-        </div>
-        <div class="relative">
-            <h2 class="text-[12vw] font-[900] leading-none tracking-tighter text-center uppercase transition-all duration-1000 group-hover:tracking-normal"
-                style="background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2048'); 
-                       background-size: cover;
-                       -webkit-background-clip: text;
-                       -webkit-text-fill-color: transparent;
-                       filter: grayscale(1);
-                       transition: filter 0.8s ease;">
-                Portfolio
-            </h2>
-            <style>.group:hover h2 { filter: grayscale(0) !important; }</style>
-            
-            <div class="absolute inset-0 grid grid-cols-3 md:grid-cols-6 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">Aramco</div>
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">NEOM</div>
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">SABIC</div>
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">Ma'aden</div>
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">STC</div>
-                <div class="text-[10px] font-black text-blue-700 text-center uppercase tracking-widest">PIF</div>
-            </div>
-        </div>
-    </section>
-
-</body>
-</html>
+</section>
