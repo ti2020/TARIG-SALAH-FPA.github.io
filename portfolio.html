@@ -7,14 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white">
-    <nav class="p-8 border-b flex justify-between items-center">
+    <nav class="p-8 border-b flex justify-between items-center bg-white sticky top-0 z-50">
         <a href="index.html" class="font-black uppercase text-[10px]">Exit Vault</a>
-        <span class="flex items-center gap-2 font-black text-[10px] uppercase"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Live Terminal Sync</span>
+        <span class="flex items-center gap-2 font-black text-[10px] uppercase text-emerald-600">
+            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Terminal Active
+        </span>
     </nav>
     <main class="max-w-7xl mx-auto py-20 px-8">
-        <div class="bg-slate-900 p-4 rounded-[3rem] shadow-2xl mb-20 overflow-hidden aspect-video">
+        <div class="bg-slate-900 p-4 rounded-[4rem] shadow-2xl mb-20 overflow-hidden aspect-video border-[12px] border-slate-800">
             <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdABYRPxPdzuhWPbv1ZuxONXrVVRI1JrmbFORIhsld1zCRgO5fpD4PXIf04SANhFhnMvirVN8Ypr_z/pubhtml?widget=true&amp;headers=false" class="w-full h-full border-none rounded-[2rem]"></iframe>
         </div>
+        <section class="grid md:grid-cols-2 gap-12 py-20 border-t border-slate-100">
+            <div class="border-l-4 border-blue-600 pl-8">
+                <h3 class="text-xs font-black uppercase text-blue-600 tracking-widest mb-4">Verification</h3>
+                <p class="text-2xl font-medium italic text-slate-700">"Exceptional accuracy in modeling and strategic cost analysis."</p>
+                <p class="mt-4 text-slate-400 uppercase text-[10px] font-black tracking-widest">CFO • LinkedIn Verified</p>
+            </div>
+        </section>
     </main>
 </body>
 </html>

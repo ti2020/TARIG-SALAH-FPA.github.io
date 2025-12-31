@@ -6,7 +6,7 @@
     <title>Terminal | Tarig Salah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; transition: 0.5s; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; transition: 0.5s; overflow-x: hidden; }
         .secure-mode { background: #0f172a; color: white; }
         #watermark { display: none; position: fixed; inset: 0; opacity: 0.03; font-size: 8vw; font-weight: 900; transform: rotate(-30deg); pointer-events: none; z-index: 100; }
         .secure-mode #watermark { display: flex; align-items: center; justify-content: center; }
@@ -14,23 +14,28 @@
         .ticker { white-space: nowrap; animation: ticker 25s linear infinite; font-size: 10px; font-weight: 900; letter-spacing: 0.2em; }
     </style>
 </head>
-<body>
+<body class="antialiased">
     <div id="watermark">PROPRIETARY • CONFIDENTIAL</div>
     <div class="fixed top-0 w-full bg-[#0f172a] text-blue-500 py-3 z-[100] overflow-hidden uppercase ticker">
         RENEWABLES • M&A • AI VEHICLES • COST STRUCTURING • RATIO ANALYSIS • SUDAN • SAUDI ARABIA
     </div>
     <nav class="fixed top-12 left-0 right-0 z-50 px-8">
         <div class="max-w-7xl mx-auto flex justify-between items-center bg-white/80 backdrop-blur-md p-6 rounded-3xl border border-slate-100 shadow-sm">
-            <div class="font-[900] uppercase tracking-tighter text-slate-900">Tarig Salah <span class="block text-[8px] text-blue-600 tracking-[0.3em]">Institutional Analyst</span></div>
+            <div class="font-[900] uppercase tracking-tighter text-slate-900 text-left">
+                Tarig Salah <span class="block text-[8px] text-blue-600 tracking-[0.3em]">Institutional Analyst</span>
+            </div>
             <div class="flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-900">
-                <a href="about.html" class="hover:text-blue-600">About</a>
-                <a href="portfolio.html" class="hover:text-blue-600">Vault</a>
-                <button onclick="document.body.classList.toggle('secure-mode')" class="bg-slate-100 px-4 py-2 rounded-full border">Secure Mode</button>
+                <a href="about.html" class="hover:text-blue-600 transition">About</a>
+                <a href="portfolio.html" class="hover:text-blue-600 transition">Vault</a>
+                <button onclick="document.body.classList.toggle('secure-mode')" class="bg-slate-100 px-4 py-2 rounded-full border text-[9px] font-black">SECURE MODE</button>
             </div>
         </div>
     </nav>
     <main class="pt-64 px-8 max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
-        <h1 class="text-8xl font-[900] uppercase tracking-tighter leading-[0.85] text-slate-900">Market <br><span class="text-blue-600">Intelligence.</span></h1>
+        <div class="text-left">
+            <h1 class="text-8xl font-[900] uppercase tracking-tighter leading-[0.85] text-slate-900">Market <br><span class="text-blue-600">Intelligence.</span></h1>
+            <p class="mt-8 text-xl text-slate-500 italic max-w-md">Precision-engineered financial modeling for high-growth sectors.</p>
+        </div>
         <div class="bg-blue-50 rounded-[4rem] p-12 flex items-center justify-center">
             <svg viewBox="0 0 200 200" class="w-full max-w-sm"><polygon points="100,20 180,80 150,170 50,170 20,80" fill="rgba(59,130,246,0.2)" stroke="#3b82f6" stroke-width="2"/></svg>
         </div>

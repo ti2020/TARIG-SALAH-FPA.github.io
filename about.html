@@ -3,65 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Tarig Salah</title>
+    <title>Journey | Tarig Salah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .keyword { color: #3b82f6; font-weight: 900; cursor: help; position: relative; border-bottom: 2px dashed #3b82f6; }
-        .popup-img { position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%) scale(0.8); width: 300px; opacity: 0; transition: 0.5s; pointer-events: none; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 4px solid white; }
-        .keyword:hover .popup-img { opacity: 1; transform: translateX(-50%) scale(1); }
-        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
-        .timeline-progress { position: absolute; left: 50%; top: 0; width: 2px; background: #3b82f6; height: 0%; z-index: 1; transition: 0.2s; }
+        body { background: #0a0f1a; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        .map-bg { position: fixed; inset: 0; background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); background-size: cover; opacity: 0.05; filter: invert(1); z-index: -1; }
+        .waterfall-path { position: absolute; left: 50%; top: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #60a5fa, #1d4ed8); transform: translateX(-50%); z-index: 0; }
+        .station-img { width: 300px; height: 200px; border-radius: 24px; object-fit: cover; border: 4px solid rgba(255,255,255,0.1); transition: 0.5s; filter: grayscale(1) brightness(0.6); }
+        .station-container:hover .station-img { filter: grayscale(0) brightness(1); transform: scale(1.05) translateY(-10px); border-color: #3b82f6; }
+        @keyframes wave { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+        .flag-icon { font-size: 2rem; animation: wave 3s ease-in-out infinite; display: inline-block; }
+        .quote-box { position: absolute; top: -30px; left: 50%; transform: translateX(-50%) translateY(20px); background: white; color: #0f172a; padding: 15px 25px; border-radius: 15px; width: 250px; opacity: 0; transition: 0.4s; pointer-events: none; font-style: italic; font-weight: 700; font-size: 0.8rem; z-index: 50; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .station-container:hover .quote-box { opacity: 1; transform: translateX(-50%) translateY(-60px); }
     </style>
 </head>
-<body class="bg-white text-slate-900 antialiased">
-    <nav class="fixed top-0 w-full p-8 z-50 flex justify-between items-center bg-white/90 backdrop-blur-md border-b border-slate-100">
-        <a href="index.html" class="font-black uppercase tracking-widest text-[10px]">← Return to Terminal</a>
-        <a href="portfolio.html" class="font-black uppercase tracking-widest text-[10px] text-blue-600">Enter Vault</a>
+<body>
+    <div class="map-bg"></div>
+    <nav class="fixed top-0 w-full p-8 z-[100] flex justify-between items-center backdrop-blur-md border-b border-white/10">
+        <a href="index.html" class="font-black uppercase tracking-widest text-[10px] text-blue-400">← Return Home</a>
+        <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-white/40">Identity Dossier</h2>
     </nav>
-
-    <main class="pt-48 pb-32 max-w-4xl mx-auto px-8">
-        <section class="text-center mb-40">
-            <h2 class="text-6xl font-[900] uppercase tracking-tighter mb-8">The Narrative</h2>
-            <p class="text-2xl text-slate-600 italic leading-relaxed">
-                Forged in <span class="keyword">Sudan<img src="https://images.unsplash.com/photo-1578310344723-644781600f1c?auto=format&fit=crop&q=80&w=800" class="popup-img"></span>, 
-                I developed a foundation of resilience. Now operating in <span class="keyword">Saudi Arabia<img src="https://images.unsplash.com/photo-1586724230021-4c38356a1b28?auto=format&fit=crop&q=80&w=800" class="popup-img"></span>, 
-                I bridge institutional modeling with emerging market reality.
-            </p>
-        </section>
-
-        <section class="relative py-20">
-            <div class="timeline-line"></div>
-            <div id="progress" class="timeline-progress"></div>
-            
-            <div class="space-y-32 relative z-10">
-                <div class="flex items-center justify-between">
-                    <div class="w-5/12 text-right font-black uppercase">University Education<br><span class="text-slate-400">B.Sc. Finance</span></div>
-                    <div class="w-12 h-12 bg-blue-600 rounded-full border-4 border-white shadow-xl"></div>
-                    <div class="w-5/12"></div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <div class="w-5/12"></div>
-                    <div class="w-12 h-12 bg-slate-900 rounded-full border-4 border-white shadow-xl"></div>
-                    <div class="w-5/12 font-black uppercase">Advanced Modeling<br><span class="text-slate-400">Certification</span></div>
-                </div>
+    <div class="relative pt-60 pb-96 max-w-7xl mx-auto">
+        <div class="waterfall-path"></div>
+        <div class="station-container relative mb-80 flex justify-start items-center w-full">
+            <div class="w-1/2 pr-20 text-right relative">
+                <div class="quote-box text-center"><span class="flag-icon">🇸🇩</span><br>"Built on resilience where the Nile meets the heart."</div>
+                <h3 class="text-6xl font-[900] uppercase tracking-tighter">Sudan</h3>
+                <img src="https://images.unsplash.com/photo-1528150231110-94d077873635?auto=format&fit=crop&q=80&w=800" class="station-img mt-8 ml-auto">
             </div>
-        </section>
-
-        <section class="mt-48">
-            <h3 class="text-center text-xs font-black uppercase tracking-[0.4em] mb-12">Analyst Due Diligence (Q&A)</h3>
-            <details class="group bg-slate-50 p-8 rounded-3xl mb-4 cursor-pointer border border-slate-100">
-                <summary class="list-none font-black uppercase text-sm flex justify-between">What drives your methodology? <span class="text-blue-600">+</span></summary>
-                <p class="mt-4 text-slate-600 italic">I prioritize "Stress-Testing" every assumption. In high-growth sectors like Renewables, the variable isn't if change happens, but how fast.</p>
-            </details>
-        </section>
-    </main>
-
-    <script>
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress").style.height = (winScroll / height) * 100 + "%";
-        };
-    </script>
+            <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-blue-500 rounded-full border-4 border-[#0a0f1a] shadow-[0_0_20px_#3b82f6]"></div>
+        </div>
+        <div class="station-container relative mb-80 flex justify-end items-center w-full">
+            <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full border-4 border-[#0a0f1a] shadow-[0_0_20px_#22c55e]"></div>
+            <div class="w-1/2 pl-20 relative text-left">
+                <div class="quote-box text-center"><span class="flag-icon">🇸🇦</span><br>"Bridging global markets within the Vision."</div>
+                <h3 class="text-6xl font-[900] uppercase tracking-tighter">Saudi Arabia</h3>
+                <img src="https://images.unsplash.com/photo-1586724230021-4c38356a1b28?auto=format&fit=crop&q=80&w=800" class="station-img mt-8">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
