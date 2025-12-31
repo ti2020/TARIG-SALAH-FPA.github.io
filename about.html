@@ -1,46 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journey | Tarig Salah</title>
+    <meta charset="UTF-8"><title>Strategy | Tarig Salah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #0a0f1a; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
-        .map-bg { position: fixed; inset: 0; background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg'); background-size: cover; opacity: 0.05; filter: invert(1); z-index: -1; }
-        .waterfall-path { position: absolute; left: 50%; top: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #60a5fa, #1d4ed8); transform: translateX(-50%); z-index: 0; }
-        .station-img { width: 300px; height: 200px; border-radius: 24px; object-fit: cover; border: 4px solid rgba(255,255,255,0.1); transition: 0.5s; filter: grayscale(1) brightness(0.6); }
-        .station-container:hover .station-img { filter: grayscale(0) brightness(1); transform: scale(1.05) translateY(-10px); border-color: #3b82f6; }
-        @keyframes wave { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
-        .flag-icon { font-size: 2rem; animation: wave 3s ease-in-out infinite; display: inline-block; }
-        .quote-box { position: absolute; top: -30px; left: 50%; transform: translateX(-50%) translateY(20px); background: white; color: #0f172a; padding: 15px 25px; border-radius: 15px; width: 250px; opacity: 0; transition: 0.4s; pointer-events: none; font-style: italic; font-weight: 700; font-size: 0.8rem; z-index: 50; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .station-container:hover .quote-box { opacity: 1; transform: translateX(-50%) translateY(-60px); }
+        body { background: #020617; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .waterfall-line { position: absolute; left: 50%; width: 2px; height: 100%; background: linear-gradient(to bottom, #3b82f6, #10b981); transform: translateX(-50%); opacity: 0.3; }
+        .station-card { width: 45%; transition: 0.5s; filter: grayscale(1); opacity: 0.7; }
+        .station-card:hover { filter: grayscale(0); opacity: 1; transform: scale(1.02); }
     </style>
 </head>
 <body>
-    <div class="map-bg"></div>
-    <nav class="fixed top-0 w-full p-8 z-[100] flex justify-between items-center backdrop-blur-md border-b border-white/10">
-        <a href="index.html" class="font-black uppercase tracking-widest text-[10px] text-blue-400">← Return Home</a>
-        <h2 class="text-[10px] font-black uppercase tracking-[0.5em] text-white/40">Identity Dossier</h2>
+    <nav class="fixed top-0 w-full p-8 z-[100] flex justify-between bg-black/50 backdrop-blur-md">
+        <a href="index.html" class="font-black uppercase text-[10px]">← Return</a>
+        <span class="text-[10px] uppercase tracking-widest text-blue-500">Market Intelligence Journey</span>
     </nav>
-    <div class="relative pt-60 pb-96 max-w-7xl mx-auto">
-        <div class="waterfall-path"></div>
-        <div class="station-container relative mb-80 flex justify-start items-center w-full">
-            <div class="w-1/2 pr-20 text-right relative">
-                <div class="quote-box text-center"><span class="flag-icon">🇸🇩</span><br>"Built on resilience where the Nile meets the heart."</div>
-                <h3 class="text-6xl font-[900] uppercase tracking-tighter">Sudan</h3>
-                <img src="https://images.unsplash.com/photo-1528150231110-94d077873635?auto=format&fit=crop&q=80&w=800" class="station-img mt-8 ml-auto">
+    <div class="relative pt-60 pb-20 max-w-7xl mx-auto">
+        <div class="waterfall-line"></div>
+        <div class="flex justify-start mb-64 px-10">
+            <div class="station-card text-right">
+                <span class="text-blue-500 font-black text-xs tracking-widest uppercase">The Foundation</span>
+                <h2 class="text-6xl font-black uppercase mb-6">Sudan</h2>
+                <p class="text-slate-400 italic">Financial resilience in high-volatility emerging markets.</p>
             </div>
-            <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-blue-500 rounded-full border-4 border-[#0a0f1a] shadow-[0_0_20px_#3b82f6]"></div>
         </div>
-        <div class="station-container relative mb-80 flex justify-end items-center w-full">
-            <div class="absolute left-1/2 -translate-x-1/2 w-8 h-8 bg-green-500 rounded-full border-4 border-[#0a0f1a] shadow-[0_0_20px_#22c55e]"></div>
-            <div class="w-1/2 pl-20 relative text-left">
-                <div class="quote-box text-center"><span class="flag-icon">🇸🇦</span><br>"Bridging global markets within the Vision."</div>
-                <h3 class="text-6xl font-[900] uppercase tracking-tighter">Saudi Arabia</h3>
-                <img src="https://images.unsplash.com/photo-1586724230021-4c38356a1b28?auto=format&fit=crop&q=80&w=800" class="station-img mt-8">
+        <div class="flex justify-end mb-64 px-10">
+            <div class="station-card text-left">
+                <span class="text-emerald-500 font-black text-xs tracking-widest uppercase">The Future</span>
+                <h2 class="text-6xl font-black uppercase mb-6">Saudi Arabia</h2>
+                <p class="text-slate-400 italic">Vision 2030 alignment and institutional scale modelling.</p>
             </div>
         </div>
     </div>
+    <section class="py-32 bg-slate-900/50 border-t border-slate-800 text-center">
+        <h2 class="text-4xl font-black uppercase mb-12">Initiate Briefing</h2>
+        <div class="flex justify-center gap-8">
+            <a href="https://t.me/YOUR_USERNAME" target="_blank" class="bg-blue-600 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest">Encrypted Channel</a>
+            <a href="mailto:YOUR_EMAIL" class="border border-slate-700 px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-white hover:text-black transition">Official Email</a>
+        </div>
+    </section>
 </body>
 </html>
