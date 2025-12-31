@@ -6,42 +6,62 @@
     <title>About | Tarig Salah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .station-card { min-width: 80vw; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-        .glass-img { backdrop-filter: blur(10px); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
-        .scroll-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10vh 10vw; gap: 5vw; }
-        .station-card { scroll-snap-align: center; }
+        .keyword { color: #3b82f6; font-weight: 900; cursor: help; position: relative; border-bottom: 2px dashed #3b82f6; }
+        .popup-img { position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%) scale(0.8); width: 300px; opacity: 0; transition: 0.5s; pointer-events: none; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 4px solid white; }
+        .keyword:hover .popup-img { opacity: 1; transform: translateX(-50%) scale(1); }
+        .timeline-line { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #e2e8f0; z-index: 0; }
+        .timeline-progress { position: absolute; left: 50%; top: 0; width: 2px; background: #3b82f6; height: 0%; z-index: 1; transition: 0.2s; }
     </style>
 </head>
-<body class="bg-[#0f172a] text-white overflow-y-hidden">
-    <nav class="fixed top-0 left-0 w-full p-10 z-50 flex justify-between items-center">
-        <a href="./index.html" class="uppercase font-black tracking-widest text-xs border-b-2 border-blue-500 pb-1">← Return Home</a>
-        <span class="text-[10px] uppercase tracking-[0.5em] text-slate-500">The Journey Dossier</span>
+<body class="bg-white text-slate-900 antialiased">
+    <nav class="fixed top-0 w-full p-8 z-50 flex justify-between items-center bg-white/90 backdrop-blur-md border-b border-slate-100">
+        <a href="index.html" class="font-black uppercase tracking-widest text-[10px]">← Return to Terminal</a>
+        <a href="portfolio.html" class="font-black uppercase tracking-widest text-[10px] text-blue-600">Enter Vault</a>
     </nav>
 
-    <div class="scroll-container h-screen items-center">
-        <div class="station-card flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <span class="text-blue-500 font-black uppercase text-xs tracking-widest">Station 01: Roots</span>
-                <h2 class="text-7xl font-[900] uppercase tracking-tighter mt-4">Sudan</h2>
-                <p class="mt-6 text-xl text-slate-400 italic leading-relaxed">Where the analytical mind was forged in resilience. The foundation of every model I build today.</p>
-            </div>
-            <div class="md:w-1/2 glass-img rounded-[3rem] p-4 rotate-3 hover:rotate-0 transition-transform duration-700">
-                <img src="https://images.unsplash.com/photo-1578310344723-644781600f1c?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] grayscale hover:grayscale-0 transition duration-1000">
-            </div>
-        </div>
+    <main class="pt-48 pb-32 max-w-4xl mx-auto px-8">
+        <section class="text-center mb-40">
+            <h2 class="text-6xl font-[900] uppercase tracking-tighter mb-8">The Narrative</h2>
+            <p class="text-2xl text-slate-600 italic leading-relaxed">
+                Forged in <span class="keyword">Sudan<img src="https://images.unsplash.com/photo-1578310344723-644781600f1c?auto=format&fit=crop&q=80&w=800" class="popup-img"></span>, 
+                I developed a foundation of resilience. Now operating in <span class="keyword">Saudi Arabia<img src="https://images.unsplash.com/photo-1586724230021-4c38356a1b28?auto=format&fit=crop&q=80&w=800" class="popup-img"></span>, 
+                I bridge institutional modeling with emerging market reality.
+            </p>
+        </section>
 
-        <div class="station-card flex flex-col md:flex-row-reverse items-center gap-12">
-            <div class="md:w-1/2">
-                <span class="text-blue-500 font-black uppercase text-xs tracking-widest">Station 02: Institutional</span>
-                <h2 class="text-7xl font-[900] uppercase tracking-tighter mt-4">Academy</h2>
-                <p class="mt-6 text-xl text-slate-400 italic leading-relaxed">B.Sc. in Finance & Accounting. Transforming raw ambition into structured institutional intelligence.</p>
-            </div>
-            <div class="md:w-1/2 glass-img rounded-[3rem] p-4 -rotate-3 hover:rotate-0 transition-transform duration-700">
-                <div class="bg-white/5 h-80 rounded-[2.5rem] flex items-center justify-center border border-white/10">
-                    <span class="text-4xl font-black opacity-20 italic">CERTIFICATION • 2023</span>
+        <section class="relative py-20">
+            <div class="timeline-line"></div>
+            <div id="progress" class="timeline-progress"></div>
+            
+            <div class="space-y-32 relative z-10">
+                <div class="flex items-center justify-between">
+                    <div class="w-5/12 text-right font-black uppercase">University Education<br><span class="text-slate-400">B.Sc. Finance</span></div>
+                    <div class="w-12 h-12 bg-blue-600 rounded-full border-4 border-white shadow-xl"></div>
+                    <div class="w-5/12"></div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="w-5/12"></div>
+                    <div class="w-12 h-12 bg-slate-900 rounded-full border-4 border-white shadow-xl"></div>
+                    <div class="w-5/12 font-black uppercase">Advanced Modeling<br><span class="text-slate-400">Certification</span></div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <section class="mt-48">
+            <h3 class="text-center text-xs font-black uppercase tracking-[0.4em] mb-12">Analyst Due Diligence (Q&A)</h3>
+            <details class="group bg-slate-50 p-8 rounded-3xl mb-4 cursor-pointer border border-slate-100">
+                <summary class="list-none font-black uppercase text-sm flex justify-between">What drives your methodology? <span class="text-blue-600">+</span></summary>
+                <p class="mt-4 text-slate-600 italic">I prioritize "Stress-Testing" every assumption. In high-growth sectors like Renewables, the variable isn't if change happens, but how fast.</p>
+            </details>
+        </section>
+    </main>
+
+    <script>
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("progress").style.height = (winScroll / height) * 100 + "%";
+        };
+    </script>
 </body>
 </html>
