@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Tarig Salah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .station-card { min-width: 80vw; transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .glass-img { backdrop-filter: blur(10px); background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+        .scroll-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10vh 10vw; gap: 5vw; }
+        .station-card { scroll-snap-align: center; }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-white overflow-y-hidden">
+    <nav class="fixed top-0 left-0 w-full p-10 z-50 flex justify-between items-center">
+        <a href="./index.html" class="uppercase font-black tracking-widest text-xs border-b-2 border-blue-500 pb-1">← Return Home</a>
+        <span class="text-[10px] uppercase tracking-[0.5em] text-slate-500">The Journey Dossier</span>
+    </nav>
+
+    <div class="scroll-container h-screen items-center">
+        <div class="station-card flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <span class="text-blue-500 font-black uppercase text-xs tracking-widest">Station 01: Roots</span>
+                <h2 class="text-7xl font-[900] uppercase tracking-tighter mt-4">Sudan</h2>
+                <p class="mt-6 text-xl text-slate-400 italic leading-relaxed">Where the analytical mind was forged in resilience. The foundation of every model I build today.</p>
+            </div>
+            <div class="md:w-1/2 glass-img rounded-[3rem] p-4 rotate-3 hover:rotate-0 transition-transform duration-700">
+                <img src="https://images.unsplash.com/photo-1578310344723-644781600f1c?auto=format&fit=crop&q=80&w=800" class="rounded-[2.5rem] grayscale hover:grayscale-0 transition duration-1000">
+            </div>
+        </div>
+
+        <div class="station-card flex flex-col md:flex-row-reverse items-center gap-12">
+            <div class="md:w-1/2">
+                <span class="text-blue-500 font-black uppercase text-xs tracking-widest">Station 02: Institutional</span>
+                <h2 class="text-7xl font-[900] uppercase tracking-tighter mt-4">Academy</h2>
+                <p class="mt-6 text-xl text-slate-400 italic leading-relaxed">B.Sc. in Finance & Accounting. Transforming raw ambition into structured institutional intelligence.</p>
+            </div>
+            <div class="md:w-1/2 glass-img rounded-[3rem] p-4 -rotate-3 hover:rotate-0 transition-transform duration-700">
+                <div class="bg-white/5 h-80 rounded-[2.5rem] flex items-center justify-center border border-white/10">
+                    <span class="text-4xl font-black opacity-20 italic">CERTIFICATION • 2023</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
