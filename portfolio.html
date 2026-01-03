@@ -1,26 +1,33 @@
-<div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center bg-slate-50/50 p-4 rounded-xl">
-    <div class="flex items-center gap-4">
-        <a href="YOUR_HENDERSON_EXCEL_LINK" class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-xs hover:bg-green-700 transition">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            DOWNLOAD MODEL
-        </a>
-        
-        <button onclick="copySecureKey('HENDERSON')" class="text-[10px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-            COPY FILE KEY
-        </button>
+<div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm max-w-2xl">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-slate-900">HENDERSON</h3>
+        <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded font-mono">PWD_PROTECTED</span>
     </div>
 
-    <div class="text-right">
-        <span class="text-[10px] font-bold text-blue-600 uppercase tracking-tighter">AFM PROTECTED</span>
+    <div class="flex gap-2 mb-6">
+        <a href="YOUR_YOUTUBE_LINK" target="_blank" class="text-xs font-bold bg-blue-600 text-white px-4 py-2 rounded">VIEW BRIEFING</a>
+        <a href="YOUR_EXCEL_LINK" class="text-xs font-bold bg-green-100 text-green-700 px-4 py-2 rounded">DOWNLOAD XLS</a>
+    </div>
+
+    <div class="bg-slate-50 p-4 rounded-lg flex justify-between items-center border border-dashed border-slate-300">
+        <div>
+            <p class="text-[10px] text-slate-400 uppercase font-bold">File Decryption</p>
+            <p class="text-xs text-slate-600">Password is required to edit/view formulas.</p>
+        </div>
+        <button onclick="copyKey('HENDERSON')" class="bg-white border border-slate-300 text-[10px] font-black px-3 py-2 rounded shadow-sm hover:bg-slate-50 active:scale-95 transition">
+            COPY FILE KEY
+        </button>
     </div>
 </div>
 
 <script>
-function copySecureKey(projectName) {
-    // This is where we keep the password hidden from the UI
-    const keys = { "HENDERSON": "HENDERSON" }; 
-    navigator.clipboard.writeText(keys[projectName]);
-    alert("Financial Model Key copied to clipboard. Paste this when opening the Excel file.");
+function copyKey(name) {
+    // These passwords come from your EXCEL PASSWORD column
+    const vault = {
+        "HENDERSON": "HENDERSON" 
+    };
+    
+    navigator.clipboard.writeText(vault[name]);
+    alert("Decryption Key copied! Use this to open the Excel file.");
 }
 </script>
