@@ -1,29 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><title>Vault | Tarig Salah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #f8fafc; font-family: 'Inter', sans-serif; }
-        .bento-card { background: white; border-radius: 2.5rem; padding: 2.5rem; border: 1px solid #e2e8f0; height: 100%; transition: 0.4s; }
-        .bento-card:hover { border-color: #3b82f6; transform: translateY(-5px); }
-    </style>
-</head>
-<body class="p-8">
-    <nav class="mb-20 flex justify-between items-center"><a href="index.html" class="font-black uppercase text-[10px]">← Exit Vault</a><span class="text-[10px] font-black uppercase tracking-widest text-emerald-600 animate-pulse">Live Sync Active</span></nav>
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="md:col-span-2 bento-card">
-            <h3 class="font-black uppercase text-xs mb-4">Live Model Terminal</h3>
-            <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdABYRPxPdzuhWPbv1ZuxONXrVVRI1JrmbFORIhsld1zCRgO5fpD4PXIf04SANhFhnMvirVN8Ypr_z/pubhtml?widget=true&amp;headers=false" class="w-full h-96 rounded-2xl"></iframe>
+<div class="bento-card group border border-white/10 bg-[#0a0a0a] p-6 rounded-2xl transition-all hover:border-gold/50">
+    <div class="flex justify-between items-start mb-6">
+        <div>
+            <h3 class="font-black text-xl uppercase tracking-tighter text-white font-inter">HENDERSON</h3>
+            <div class="flex items-center gap-2 mt-1">
+                <span class="text-[9px] text-emerald-500 font-mono font-bold tracking-widest uppercase">AFM_ENGINEERED</span>
+                <span class="text-[9px] text-gray-500 font-mono tracking-widest uppercase">📍 CAIRO_HQ</span>
+            </div>
         </div>
-        <div class="bento-card">
-            <h3 class="font-black uppercase text-xs mb-4">Executive Video</h3>
-            <div class="bg-slate-100 aspect-video rounded-2xl flex items-center justify-center font-bold text-slate-400 uppercase text-[10px]">Briefing Walkthrough</div>
-        </div>
-        <div class="bento-card flex flex-col justify-between">
-            <h3 class="font-black uppercase text-xs mb-4">Investment Dossier (PDF)</h3>
-            <a href="#" class="bg-slate-900 text-white text-center py-4 rounded-xl font-black text-[10px] uppercase">Open Report</a>
+        <div class="w-20 h-20">
+            <canvas id="chart_henderson"></canvas>
         </div>
     </div>
-</body>
-</html>
+
+    <div class="flex gap-2 mb-4">
+        <button onclick="updateFrame('henderson', 'video')" class="btn-terminal active">Briefing</button>
+        <button onclick="updateFrame('henderson', 'slides')" class="btn-terminal">Slides</button>
+        <button onclick="updateFrame('henderson', 'report')" class="btn-terminal">Infographic</button>
+    </div>
+
+    <div class="relative aspect-video rounded-xl overflow-hidden bg-black/40 border border-white/5">
+        <iframe id="frame_henderson" src="YOUR_VIDEO_URL_HERE" class="w-full h-full"></iframe>
+    </div>
+
+    <div class="mt-6 flex justify-between items-center">
+        <a href="YOUR_EXCEL_URL_HERE" class="text-[10px] font-mono font-bold text-gray-400 hover:text-white transition">
+            [ DATA_SOURCE: EXCEL_V.1 ]
+        </a>
+        <div class="flex gap-1">
+            <div class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></div>
+            <div class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" style="animation-delay: 0.2s"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Chart.js Logic for Henderson
+new Chart(document.getElementById('chart_henderson'), {
+    type: 'radar',
+    data: {
+        labels: ['LOGIC', 'AUDIT', 'UX'],
+        datasets: [{
+            data: [98, 95, 96],
+            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+            borderColor: '#10b981',
+            pointRadius: 0
+        }]
+    },
+    options: { /* Terminal styling for chart */ }
+});
+</script>
