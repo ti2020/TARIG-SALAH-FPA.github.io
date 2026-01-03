@@ -1,33 +1,37 @@
-<div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm max-w-2xl">
-    <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-bold text-slate-900">HENDERSON</h3>
-        <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded font-mono">PWD_PROTECTED</span>
-    </div>
-
-    <div class="flex gap-2 mb-6">
-        <a href="YOUR_YOUTUBE_LINK" target="_blank" class="text-xs font-bold bg-blue-600 text-white px-4 py-2 rounded">VIEW BRIEFING</a>
-        <a href="YOUR_EXCEL_LINK" class="text-xs font-bold bg-green-100 text-green-700 px-4 py-2 rounded">DOWNLOAD XLS</a>
-    </div>
-
-    <div class="bg-slate-50 p-4 rounded-lg flex justify-between items-center border border-dashed border-slate-300">
+<div class="max-w-3xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden my-12 font-sans">
+    
+    <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/30">
         <div>
-            <p class="text-[10px] text-slate-400 uppercase font-bold">File Decryption</p>
-            <p class="text-xs text-slate-600">Password is required to edit/view formulas.</p>
+            <h2 class="text-2xl font-black text-gray-900 tracking-tight">HENDERSON</h2>
+            <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-1">AFM Standard • Developed in Cairo</p>
         </div>
-        <button onclick="copyKey('HENDERSON')" class="bg-white border border-slate-300 text-[10px] font-black px-3 py-2 rounded shadow-sm hover:bg-slate-50 active:scale-95 transition">
-            COPY FILE KEY
-        </button>
+        <div class="text-right">
+            <span class="text-[10px] text-gray-400 font-bold uppercase block">Logic Score</span>
+            <span class="text-xl font-black text-gray-900">98%</span>
+        </div>
+    </div>
+
+    <div class="aspect-video bg-black">
+        <iframe width="100%" height="100%" 
+            src="https://www.youtube.com/embed/xGWlE_y2vpQ" 
+            frameborder="0" allowfullscreen>
+        </iframe>
+    </div>
+
+    <div class="p-6">
+        <div class="flex flex-wrap gap-2 mb-6">
+            <a href="https://read.litera-reader.com/?source=cafd349543aa1ca884fb420ad6ec706e24b87163f3fa966f1303d2649564da4b..." target="_blank" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-xs font-bold hover:bg-gray-200 transition">VIEW REPORT</a>
+            <a href="https://docs.google.com/spreadsheets/d/1ZqR5RnS_e5y6Tf5-_oaIK5OOb9KNJD42/edit" target="_blank" class="bg-green-50 text-green-700 px-4 py-2 rounded-lg text-xs font-bold hover:bg-green-100 transition">GET EXCEL</a>
+        </div>
+
+        <div class="bg-blue-600 rounded-xl p-5 flex justify-between items-center text-white">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-tight">Encrypted Model Access</p>
+                <p class="text-[11px] opacity-80">Message for the Excel decryption password.</p>
+            </div>
+            <a href="https://t.me/UPSTREAMER67" target="_blank" class="bg-white text-blue-600 px-5 py-2 rounded-full text-xs font-black shadow-lg hover:scale-105 transition">
+                CONTACT @UPSTREAMER67
+            </a>
+        </div>
     </div>
 </div>
-
-<script>
-function copyKey(name) {
-    // These passwords come from your EXCEL PASSWORD column
-    const vault = {
-        "HENDERSON": "HENDERSON" 
-    };
-    
-    navigator.clipboard.writeText(vault[name]);
-    alert("Decryption Key copied! Use this to open the Excel file.");
-}
-</script>
