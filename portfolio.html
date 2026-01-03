@@ -1,93 +1,65 @@
-<div class="vault-card bg-[#080808] border border-white/10 rounded-3xl p-8 font-inter overflow-hidden relative group">
-    
-    <div class="absolute top-0 right-0 p-4 opacity-20 pointer-events-none">
-        <span class="text-[40px] font-black text-white/5 font-mono">30.0444° N</span>
-    </div>
-
-    <div class="flex justify-between items-start relative z-10 mb-8">
+<div class="max-w-4xl mx-auto bg-white border border-slate-200 rounded-3xl shadow-xl overflow-hidden font-sans my-10">
+    <div class="p-8 border-b border-slate-100 flex justify-between items-center">
         <div>
-            <div class="flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
-                <span class="text-gold font-mono text-[10px] tracking-[0.4em] uppercase font-bold">Cairo_HQ Engineering</span>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">HENDERSON</h2>
+            <div class="flex items-center gap-3 mt-2">
+                <span class="bg-blue-600 text-white text-[10px] px-2 py-1 rounded font-bold uppercase tracking-widest">AFM Verified</span>
+                <span class="text-slate-400 text-[10px] font-medium uppercase tracking-widest">Developed during Cairo Residency</span>
             </div>
-            <h2 class="text-4xl font-black text-white tracking-tighter uppercase leading-none">HENDERSON</h2>
-            <p class="text-gray-400 text-xs font-mono mt-2 tracking-widest">[ SECTOR: STRATEGIC_MODELLING ]</p>
         </div>
-        
-        <div class="w-28 h-28 bg-white/5 rounded-2xl p-3 border border-white/10 backdrop-blur-sm">
-            <canvas id="chart_henderson"></canvas>
+        <div class="w-24 h-24">
+            <canvas id="hendersonChart"></canvas>
         </div>
     </div>
 
-    <div class="flex gap-3 mb-6">
-        <button onclick="updateAsset('henderson', 'video')" class="asset-tab active">
-            <span class="text-[9px]">●</span> AI BRIEFING
-        </button>
-        <button onclick="updateAsset('henderson', 'slides')" class="asset-tab">
-            <span class="text-[9px]">○</span> STRATEGY SLIDES
-        </button>
-        <button onclick="updateAsset('henderson', 'report')" class="asset-tab">
-            <span class="text-[9px]">○</span> INFOGRAPHIC
-        </button>
+    <div class="bg-slate-50 px-8 py-4 flex gap-4">
+        <button onclick="switchMedia('yt-link')" class="text-xs font-bold text-slate-900 border-b-2 border-blue-600 pb-1">AI VIDEO BRIEFING</button>
+        <button onclick="switchMedia('pdf-link')" class="text-xs font-bold text-slate-400 hover:text-slate-600 transition">STRATEGY SLIDES</button>
+        <button onclick="switchMedia('info-link')" class="text-xs font-bold text-slate-400 hover:text-slate-600 transition">INFOGRAPHIC</button>
     </div>
 
-    <div class="relative w-full aspect-video rounded-2xl bg-black border border-white/5 overflow-hidden shadow-2xl">
-        <iframe id="window_henderson" 
-                src="YOUR_HENDERSON_VIDEO_LINK" 
-                class="w-full h-full border-0" 
-                allowfullscreen>
+    <div class="aspect-video bg-black">
+        <iframe id="mainViewer" class="w-full h-full" 
+            src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+            title="Henderson Model Walkthrough" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
         </iframe>
-        <div class="absolute bottom-0 left-0 w-full bg-black/80 backdrop-blur-md px-4 py-2 flex justify-between border-t border-white/5">
-            <span class="text-[8px] font-mono text-emerald-500 uppercase tracking-widest">Status: Transmission_Stable</span>
-            <span class="text-[8px] font-mono text-gray-500 uppercase">AFM Standard Verified</span>
-        </div>
     </div>
 
-    <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
-        <a href="YOUR_HENDERSON_EXCEL_LINK" class="excel-link group">
-            <div class="flex items-center gap-3">
-                <div class="p-2 bg-emerald-500/10 rounded group-hover:bg-emerald-500/20 transition">
-                    <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                </div>
-                <div>
-                    <span class="text-[10px] font-bold text-white block">DOWNLOAD_MODEL.xlsx</span>
-                    <span class="text-[8px] text-gray-500 font-mono uppercase">Henderson_Architecture_v1.0</span>
-                </div>
+    <div class="p-8 bg-white flex justify-between items-center">
+        <a href="YOUR_EXCEL_LINK" class="flex items-center gap-4 group">
+            <div class="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition">
+                <span class="text-green-600 font-bold">XLS</span>
+            </div>
+            <div>
+                <p class="text-sm font-bold text-slate-900">Download Audit-Ready Model</p>
+                <p class="text-xs text-slate-500 font-mono">Henderson_V1.0.xlsx</p>
             </div>
         </a>
-        
         <div class="text-right">
-            <span class="text-[10px] font-mono font-black text-emerald-500 tracking-tighter">98% INTEGRITY</span>
-            <div class="w-24 h-1 bg-white/5 rounded-full mt-1 overflow-hidden">
-                <div class="h-full bg-emerald-500" style="width: 98%"></div>
-            </div>
+            <p class="text-[10px] font-bold text-slate-400 uppercase">Logic Integrity</p>
+            <p class="text-xl font-black text-slate-900">98%</p>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const ctx = document.getElementById('chart_henderson').getContext('2d');
+    const ctx = document.getElementById('hendersonChart');
     new Chart(ctx, {
         type: 'radar',
         data: {
             labels: ['LOGIC', 'AUDIT', 'UX'],
             datasets: [{
                 data: [98, 95, 96],
-                borderColor: '#FFD700',
-                backgroundColor: 'rgba(255, 215, 0, 0.1)',
-                borderWidth: 1,
+                fill: true,
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                borderColor: 'rgb(37, 99, 235)',
                 pointRadius: 0
             }]
         },
         options: {
-            scales: {
-                r: {
-                    angleLines: { color: 'rgba(255,255,255,0.05)' },
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    pointLabels: { color: '#666', font: { size: 8 } },
-                    ticks: { display: false }
-                }
-            },
+            scales: { r: { grid: { display: false }, ticks: { display: false } } },
             plugins: { legend: { display: false } }
         }
     });
