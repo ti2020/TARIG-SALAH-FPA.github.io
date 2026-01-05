@@ -3,79 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Modeling Vault | AFM Cairo</title>
+    <title>Financial Portfolio | AFM Cairo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="p-4 md:p-12">
+<body class="py-12 px-4">
 
-    <header class="max-w-6xl mx-auto mb-16 text-center">
-        <h1 class="text-5xl font-black text-slate-900 tracking-tighter uppercase mb-4">Financial Intelligence Vault</h1>
-        <p class="text-slate-500 font-medium uppercase tracking-[0.2em] text-xs">
-            Technical Portfolio • AFM Residency: <span class="text-blue-600">Cairo, Egypt</span>
-        </p>
+    <header class="max-w-4xl mx-auto text-center mb-16">
+        <h1 class="text-4xl font-black text-slate-900 tracking-tighter uppercase">Financial Model Vault</h1>
+        <p class="text-blue-600 font-bold text-xs tracking-[0.3em] mt-2">AFM RESIDENCY: CAIRO, EGYPT</p>
     </header>
 
-    <div id="vault-container" class="max-w-6xl mx-auto grid grid-cols-1 gap-12">
-        </div>
+    <div id="project-vault" class="max-w-5xl mx-auto space-y-10"></div>
 
     <script>
-        const projects = [
+        // DATA SECTION: Update your IDs here
+        const projectData = [
             {
                 name: "HENDERSON",
-                youtubeId: "xGWlE_y2vpQ", // Extract ID from your link
-                excelDownloadId: "1ZqR5RnS_e5y6Tf5-_oaIK5OOb9KNJD42", // Extract ID from Drive link
-                literaLink: "https://read.litera-reader.com/?source=cafd349543aa1ca884fb420ad6ec706e24b87163f3fa966f1303d2649564da4b...",
-                logic: 98, audit: 95, ux: 96
+                ytId: "xGWlE_y2vpQ",
+                driveId: "1ZqR5RnS_e5y6Tf5-_oaIK5OOb9KNJD42",
+                literaUrl: "https://read.litera-reader.com/?source=cafd349543aa1ca884fb420ad6ec706e24b87163f3fa966f1303d2649564da4b...",
+                metrics: [98, 95, 96]
+            },
+            {
+                name: "PASSION PAINTS",
+                ytId: "xrmiFZqyOmU",
+                driveId: "YOUR_DRIVE_ID_2",
+                literaUrl: "YOUR_LITERA_LINK_2",
+                metrics: [98, 95, 96]
             }
-            // Add your other 19 projects here following the same format
+            // Add more projects here following the same pattern
         ];
 
-        function renderProjects() {
-            const container = document.getElementById('vault-container');
+        function initVault() {
+            const vault = document.getElementById('project-vault');
             
-            projects.forEach((p, index) => {
+            projectData.forEach((p, i) => {
                 const card = `
-                <div class="bg-white border border-slate-200 rounded-[2rem] shadow-xl overflow-hidden flex flex-col md:flex-row">
-                    <div class="md:w-3/5 bg-black aspect-video md:aspect-auto">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${p.youtubeId}" frameborder="0" allowfullscreen></iframe>
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 flex flex-col md:flex-row">
+                    <div class="md:w-3/5 bg-black aspect-video">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${p.ytId}" frameborder="0" allowfullscreen></iframe>
                     </div>
 
-                    <div class="md:w-2/5 p-8 flex flex-col justify-between">
+                    <div class="md:w-2/5 p-8 flex flex-col justify-between bg-white">
                         <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <h2 class="text-3xl font-black text-slate-900 italic tracking-tighter">${p.name}</h2>
-                                <canvas id="chart-${index}" width="80" height="80"></canvas>
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-2xl font-black text-slate-900 italic tracking-tighter">${p.name}</h2>
+                                <div class="w-16 h-16"><canvas id="chart-${i}"></canvas></div>
                             </div>
-                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-6">Structural Integrity: ${p.logic}%</p>
+                            <div class="space-y-3">
+                                <a href="${p.literaUrl}" target="_blank" class="block w-full text-center py-3 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold hover:bg-slate-200 transition">VIEW LITERA REPORT ↗</a>
+                                
+                                <a href="https://drive.google.com/uc?export=download&id=${p.driveId}" class="block w-full text-center py-3 rounded-xl bg-green-600 text-white text-xs font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition">DOWNLOAD EXCEL (.XLSX)</a>
+                                
+                                <a href="https://t.me/UPSTREAMER67" target="_blank" class="block w-full text-center py-3 rounded-xl bg-blue-600 text-white text-[10px] font-black tracking-widest hover:bg-blue-700 transition uppercase">REQUEST PWD KEY (@UPSTREAMER67)</a>
+                            </div>
                         </div>
-
-                        <div class="space-y-3">
-                            <a href="${p.literaLink}" target="_blank" class="block w-full text-center py-3 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-200 transition">VIEW STRATEGY PDF</a>
-                            
-                            <a href="https://drive.google.com/uc?export=download&id=${p.excelDownloadId}" class="block w-full text-center py-3 bg-green-600 text-white rounded-xl text-xs font-bold hover:bg-green-700 shadow-lg shadow-green-200 transition">DOWNLOAD EXCEL (ENCRYPTED)</a>
-                            
-                            <a href="https://t.me/UPSTREAMER67" target="_blank" class="block w-full text-center py-4 bg-blue-600 text-white rounded-xl text-[10px] font-black tracking-widest hover:bg-blue-700 transition uppercase">
-                                Request Decryption Key (@UPSTREAMER67)
-                            </a>
-                        </div>
+                        <p class="mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center border-t pt-4">Proprietary AFM Logic • Cairo Residency</p>
                     </div>
                 </div>`;
                 
-                container.innerHTML += card;
+                vault.innerHTML += card;
 
-                // Create the Radar Chart
+                // Render Charts
                 setTimeout(() => {
-                    new Chart(document.getElementById(`chart-${index}`), {
+                    new Chart(document.getElementById(`chart-${i}`), {
                         type: 'radar',
                         data: {
                             labels: ['L', 'A', 'U'],
                             datasets: [{
-                                data: [p.logic, p.audit, p.ux],
+                                data: p.metrics,
                                 backgroundColor: 'rgba(37, 99, 235, 0.1)',
                                 borderColor: '#2563eb',
                                 borderWidth: 2,
@@ -83,7 +86,7 @@
                             }]
                         },
                         options: {
-                            scales: { r: { grid: { display: false }, ticks: { display: false }, suggestMin: 0 } },
+                            scales: { r: { grid: { display: false }, ticks: { display: false } } },
                             plugins: { legend: { display: false } }
                         }
                     });
@@ -91,7 +94,7 @@
             });
         }
 
-        renderProjects();
+        initVault();
     </script>
 </body>
 </html>
