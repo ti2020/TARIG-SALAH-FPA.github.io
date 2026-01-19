@@ -27,7 +27,7 @@
         <div class="flex flex-col items-center justify-center gap-8">
             <div class="relative hover-lift" onclick="document.getElementById('portfolio-section').scrollIntoView({behavior: 'smooth'})">
                 <div class="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full"></div>
-                <img src="data:image/jpeg;base64,...(your_base64_data)..." alt="AFM Badge" class="w-48 h-48 relative z-10 badge-glow object-contain">
+                <img src="afm-badge.jpg" alt="AFM Badge" class="w-48 h-48 relative z-10 badge-glow object-contain">
             </div>
             
             <div>
@@ -52,8 +52,8 @@
             </div>
     </section>
 
+    
     <script>
-        // Data extracted from your CSV "TARIG - AFM - 2026-18-JAN -Protofilo"
         const modelData = [
             {
                         "name": "HENDERSON",
@@ -227,7 +227,6 @@
             }
 ];
 
-        
         function renderModels() {
             const grid = document.getElementById('model-grid');
             const countLabel = document.getElementById('model-count');
@@ -276,46 +275,9 @@
             });
             countLabel.innerText = modelData.length;
         }
-</span>
-                            <div class="flex gap-1">
-                                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                <span class="text-xs text-slate-500 font-bold uppercase">Logic Verified</span>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4 tracking-tight text-white">${model.name}</h3>
-                        
-                        <div class="grid grid-cols-3 gap-2 mb-6">
-                            <div class="bg-slate-900/50 p-2 rounded border border-slate-800 text-center">
-                                <p class="text-[9px] text-slate-500 uppercase">Logic</p>
-                                <p class="text-xs font-bold text-blue-400">${Math.round(model.logic * 100)}%</p>
-                            </div>
-                            <div class="bg-slate-900/50 p-2 rounded border border-slate-800 text-center">
-                                <p class="text-[9px] text-slate-500 uppercase">Audit</p>
-                                <p class="text-xs font-bold text-green-400">${Math.round(model.audit * 100)}%</p>
-                            </div>
-                            <div class="bg-slate-900/50 p-2 rounded border border-slate-800 text-center">
-                                <p class="text-[9px] text-slate-500 uppercase">UX</p>
-                                <p class="text-xs font-bold text-purple-400">${Math.round(model.ux * 100)}%</p>
-                            </div>
-                        </div>
 
-                        <div class="flex flex-col gap-2">
-                            <a href="${model.pdf}" target="_blank" class="w-full text-center py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-black rounded-lg transition-all uppercase tracking-widest">
-                                Open PDF Model
-                            </a>
-                            <button class="w-full text-center py-2 text-slate-400 hover:text-white text-[10px] font-bold uppercase tracking-wider">
-                                View Technical Walkthrough
-                            </button>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += card;
-            });
-            countLabel.innerText = modelData.length;
-        }
-
-        // Initialize on load
         window.onload = renderModels;
     </script>
+
 </body>
 </html>
