@@ -34,7 +34,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             cursor: grab;
             user-select: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
+        .moving-card.hidden { opacity: 0; pointer-events: none; }
         .moving-card:active { cursor: grabbing; }
         .heart-btn {
             color: #ef4444;
@@ -52,6 +54,79 @@
             justify-content: space-between;
             align-items: center;
         }
+        .filter-panel {
+            position: fixed;
+            top: 8rem;
+            left: 2rem;
+            z-index: 99;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            width: 320px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #3b82f6;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .search-input, .filter-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .search-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .filter-btn {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        .filter-btn:hover { background: #2563eb; transform: scale(1.02); }
+        .clear-btn {
+            width: 100%;
+            background: transparent;
+            color: #64748b;
+            padding: 0.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 0.75rem;
+            transition: all 0.3s;
+        }
+        .clear-btn:hover { border-color: #3b82f6; color: #3b82f6; }
         .form-overlay {
             position: fixed;
             bottom: 2rem;
@@ -69,6 +144,8 @@
             font-size: 0.75rem;
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
             transition: all 0.3s;
+            border: none;
+            cursor: pointer;
         }
         .glass-btn:hover {
             background: #3b82f6;
@@ -108,6 +185,32 @@
             outline: none;
             border-color: #3b82f6;
         }
+        .results-count {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #3b82f6;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -126,9 +229,46 @@
         </div>
     </nav>
 
+    <!-- Filter Panel -->
+    <div class="filter-panel">
+        <h3 class="text-sm font-black uppercase tracking-tighter mb-4 text-white">Search & Filter</h3>
+        
+        <div class="filter-section">
+            <label class="filter-label">Search by Name</label>
+            <input type="text" id="searchName" class="search-input" placeholder="Enter name...">
+        </div>
+
+        <div class="filter-section">
+            <label class="filter-label">Filter by Country</label>
+            <select id="filterCountry" class="filter-select">
+                <option value="">All Countries</option>
+            </select>
+        </div>
+
+        <div class="filter-section">
+            <label class="filter-label">Filter by Position</label>
+            <select id="filterPosition" class="filter-select">
+                <option value="">All Positions</option>
+            </select>
+        </div>
+
+        <div class="filter-section">
+            <label class="filter-label">Sort by Date</label>
+            <select id="sortDate" class="filter-select">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+            </select>
+        </div>
+
+        <button onclick="applyFilters()" class="filter-btn">Apply Filters</button>
+        <button onclick="clearFilters()" class="clear-btn">Clear All</button>
+    </div>
+
     <div class="board-container" id="board">
         <!-- Cards will be injected here -->
     </div>
+
+    <div class="results-count" id="resultsCount">Showing 0 posts</div>
 
     <div class="form-overlay">
         <button onclick="openModal()" class="glass-btn">Post to Board</button>
@@ -158,7 +298,7 @@
 
     <script>
         const board = document.getElementById('board');
-        const posts = [
+        let allPosts = [
             {
                 name: "Sample Colleague",
                 position: "Senior Analyst",
@@ -170,9 +310,15 @@
             }
         ];
 
-        function createCard(post) {
+        function createCard(post, index) {
             const card = document.createElement('div');
             card.className = 'moving-card';
+            card.setAttribute('data-index', index);
+            card.setAttribute('data-country', post.country);
+            card.setAttribute('data-position', post.position);
+            card.setAttribute('data-date', post.date);
+            card.setAttribute('data-name', post.name.toLowerCase());
+            
             card.innerHTML = `
                 <div class="flex items-center gap-4 mb-4">
                     <img src="${post.photo || 'https://ui-avatars.com/api/?name=' + post.name}" class="w-12 h-12 rounded-full border border-blue-500/30 object-cover">
@@ -224,6 +370,87 @@
             gsap.from(el.querySelector('.heart-btn'), { scale: 1.5, duration: 0.3 });
         }
 
+        function populateFilters() {
+            const countries = new Set(allPosts.map(p => p.country));
+            const positions = new Set(allPosts.map(p => p.position));
+
+            const countrySelect = document.getElementById('filterCountry');
+            const positionSelect = document.getElementById('filterPosition');
+
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+
+            positions.forEach(position => {
+                const option = document.createElement('option');
+                option.value = position;
+                option.textContent = position;
+                positionSelect.appendChild(option);
+            });
+        }
+
+        function applyFilters() {
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const filterCountry = document.getElementById('filterCountry').value;
+            const filterPosition = document.getElementById('filterPosition').value;
+            const sortDate = document.getElementById('sortDate').value;
+
+            const cards = document.querySelectorAll('.moving-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const country = card.getAttribute('data-country');
+                const position = card.getAttribute('data-position');
+
+                let show = true;
+
+                if (searchName && !name.includes(searchName)) show = false;
+                if (filterCountry && country !== filterCountry) show = false;
+                if (filterPosition && position !== filterPosition) show = false;
+
+                if (show) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Sort by date
+            if (sortDate === 'oldest') {
+                cards.forEach(card => {
+                    if (!card.classList.contains('hidden')) {
+                        card.style.zIndex = new Date(card.getAttribute('data-date')).getTime();
+                    }
+                });
+            } else {
+                cards.forEach(card => {
+                    if (!card.classList.contains('hidden')) {
+                        card.style.zIndex = -new Date(card.getAttribute('data-date')).getTime();
+                    }
+                });
+            }
+
+            document.getElementById('resultsCount').textContent = `Showing ${visibleCount} post${visibleCount !== 1 ? 's' : ''}`;
+        }
+
+        function clearFilters() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('filterCountry').value = '';
+            document.getElementById('filterPosition').value = '';
+            document.getElementById('sortDate').value = 'newest';
+
+            document.querySelectorAll('.moving-card').forEach(card => {
+                card.classList.remove('hidden');
+            });
+
+            document.getElementById('resultsCount').textContent = `Showing ${allPosts.length} post${allPosts.length !== 1 ? 's' : ''}`;
+        }
+
         function openModal() { document.getElementById('postModal').classList.add('active'); }
         function closeModal() { document.getElementById('postModal').classList.remove('active'); }
 
@@ -240,13 +467,18 @@
                 likes: 0,
                 date: new Date().toISOString().split('T')[0]
             };
-            createCard(newPost);
+            allPosts.push(newPost);
+            createCard(newPost, allPosts.length - 1);
+            populateFilters();
             closeModal();
             e.target.reset();
+            document.getElementById('resultsCount').textContent = `Showing ${allPosts.length} post${allPosts.length !== 1 ? 's' : ''}`;
         }
 
         // Initialize
-        posts.forEach(createCard);
+        allPosts.forEach((post, index) => createCard(post, index));
+        populateFilters();
+        document.getElementById('resultsCount').textContent = `Showing ${allPosts.length} post${allPosts.length !== 1 ? 's' : ''}`;
     </script>
 </body>
 </html>
