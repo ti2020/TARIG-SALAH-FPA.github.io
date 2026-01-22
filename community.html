@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Board | Tarig Salah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        body { 
+            background: #020617; 
+            color: #f8fafc; 
+            overflow: hidden;
+            margin: 0;
+        }
+        .board-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            overflow: hidden;
+        }
+        .moving-card {
+            position: absolute;
+            width: 300px;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            cursor: grab;
+            user-select: none;
+        }
+        .moving-card:active { cursor: grabbing; }
+        .heart-btn {
+            color: #ef4444;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .heart-btn:hover { transform: scale(1.2); }
+        .nav-fixed {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-overlay {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+        }
+        .glass-btn {
+            background: rgba(59, 130, 246, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.75rem;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+        }
+        .glass-btn:hover {
+            background: #3b82f6;
+            transform: scale(1.05);
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+        }
+        input, textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-fixed">
+        <div class="flex flex-col">
+            <span class="text-xl font-black tracking-tighter uppercase">Tarig Salah</span>
+            <span class="text-[8px] font-bold tracking-[0.5em] text-blue-500 uppercase">Community Board</span>
+        </div>
+        <div class="flex gap-4 items-center">
+            <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest hover:text-blue-400 transition">Terminal</a>
+            <a href="portfolio.html" class="text-[10px] font-bold uppercase tracking-widest hover:text-blue-400 transition">Vault</a>
+            <a href="https://t.me/AZRG_97" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-full text-[9px] font-bold uppercase tracking-widest flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>Telegram
+            </a>
+        </div>
+    </nav>
+
+    <div class="board-container" id="board">
+        <!-- Cards will be injected here -->
+    </div>
+
+    <div class="form-overlay">
+        <button onclick="openModal()" class="glass-btn">Post to Board</button>
+    </div>
+
+    <!-- Post Modal -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-2xl font-black uppercase mb-6 tracking-tighter">New Community Post</h2>
+            <form id="postForm" onsubmit="handlePost(event)">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="name" placeholder="Full Name" required>
+                    <input type="text" id="position" placeholder="Position" required>
+                </div>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="country" placeholder="Country" required>
+                    <input type="url" id="linkedin" placeholder="LinkedIn Profile URL" required>
+                </div>
+                <input type="url" id="photo" placeholder="Photo URL (or LinkedIn Photo URL)">
+                <textarea id="message" placeholder="Your Message (Max 500 characters)" maxlength="500" rows="4" required></textarea>
+                <button type="submit" class="w-full bg-blue-600 py-3 rounded-xl font-black uppercase tracking-widest text-sm hover:bg-blue-500 transition">Publish Post</button>
+                <button type="button" onclick="closeModal()" class="w-full mt-3 text-slate-500 text-[10px] font-bold uppercase tracking-widest">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const board = document.getElementById('board');
+        const posts = [
+            {
+                name: "Sample Colleague",
+                position: "Senior Analyst",
+                country: "Saudi Arabia",
+                message: "Great work on the DCF models! The strategic alignment with Vision 2030 is impressive.",
+                likes: 12,
+                date: "2026-01-22",
+                photo: "https://ui-avatars.com/api/?name=Sample+Colleague&background=3b82f6&color=fff"
+            }
+        ];
+
+        function createCard(post) {
+            const card = document.createElement('div');
+            card.className = 'moving-card';
+            card.innerHTML = `
+                <div class="flex items-center gap-4 mb-4">
+                    <img src="${post.photo || 'https://ui-avatars.com/api/?name=' + post.name}" class="w-12 h-12 rounded-full border border-blue-500/30 object-cover">
+                    <div>
+                        <h3 class="font-black text-sm uppercase tracking-tight">${post.name}</h3>
+                        <p class="text-[9px] text-blue-400 font-bold uppercase tracking-widest">${post.position}</p>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed mb-4 italic">"${post.message}"</p>
+                <div class="flex justify-between items-center border-t border-white/10 pt-3">
+                    <div class="flex flex-col">
+                        <span class="text-[8px] text-slate-500 font-bold uppercase">${post.country}</span>
+                        <span class="text-[8px] text-slate-600 font-bold uppercase">${post.date}</span>
+                    </div>
+                    <div class="flex items-center gap-2" onclick="likePost(this)">
+                        <span class="heart-btn">❤</span>
+                        <span class="text-[10px] font-black text-slate-400">${post.likes}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Random initial position
+            const x = Math.random() * (window.innerWidth - 300);
+            const y = Math.random() * (window.innerHeight - 200);
+            card.style.left = x + 'px';
+            card.style.top = y + 'px';
+            
+            board.appendChild(card);
+            animateCard(card);
+        }
+
+        function animateCard(card) {
+            const duration = 20 + Math.random() * 20;
+            gsap.to(card, {
+                x: "random(-100, 100)",
+                y: "random(-100, 100)",
+                rotation: "random(-5, 5)",
+                duration: duration,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        }
+
+        function likePost(el) {
+            const countEl = el.querySelector('span:last-child');
+            let count = parseInt(countEl.innerText);
+            countEl.innerText = count + 1;
+            gsap.from(el.querySelector('.heart-btn'), { scale: 1.5, duration: 0.3 });
+        }
+
+        function openModal() { document.getElementById('postModal').classList.add('active'); }
+        function closeModal() { document.getElementById('postModal').classList.remove('active'); }
+
+        function handlePost(e) {
+            e.preventDefault();
+            const newPost = {
+                name: document.getElementById('name').value,
+                position: document.getElementById('position').value,
+                email: document.getElementById('email').value,
+                country: document.getElementById('country').value,
+                linkedin: document.getElementById('linkedin').value,
+                photo: document.getElementById('photo').value,
+                message: document.getElementById('message').value,
+                likes: 0,
+                date: new Date().toISOString().split('T')[0]
+            };
+            createCard(newPost);
+            closeModal();
+            e.target.reset();
+        }
+
+        // Initialize
+        posts.forEach(createCard);
+    </script>
+</body>
+</html>
