@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Quotes Vault | Tarig Salah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700;900&family=Courier+Prime&family=Georgia&family=Trebuchet+MS&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #020617;
+            color: #f8fafc;
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Login Screen */
+        .login-container {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #3b82f6;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .login-btn:hover {
+            background: #2563eb;
+            transform: scale(1.02);
+        }
+
+        .login-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Main Vault */
+        .vault-container {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .vault-container.active {
+            display: block;
+        }
+
+        .vault-header {
+            max-width: 7xl;
+            margin: 0 auto 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .vault-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .vault-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .lang-toggle {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .lang-toggle:hover {
+            background: #3b82f6;
+        }
+
+        .add-quote-btn {
+            background: #22c55e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .add-quote-btn:hover {
+            background: #16a34a;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Gallery Grid */
+        .gallery {
+            max-width: 7xl;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .quote-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+
+        .quote-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateY(-5px);
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #e2e8f0;
+        }
+
+        .quote-text.ar {
+            font-family: 'Droid Arabic Kufi', 'Cairo', serif;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .quote-media {
+            margin: 1.5rem 0;
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .quote-media img,
+        .quote-media video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .quote-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
+
+        .quote-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #3b82f6;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .heart-btn.liked {
+            color: #ef4444;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px dashed #3b82f6;
+            border-radius: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-input-label:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .file-input-label input {
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #22c55e;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #16a34a;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            background: transparent;
+            color: #64748b;
+            padding: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 0.25rem;
+        }
+
+        .comment-text {
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            color: white;
+            font-size: 0.875rem;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .comment-submit {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+        }
+
+        .comment-submit:hover {
+            background: #2563eb;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1 class="login-title">Quotes Vault</h1>
+            <p class="login-subtitle">Personal & Protected</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="password" id="vaultPassword" class="login-input" placeholder="Enter Vault Password" required>
+                <div class="login-error" id="loginError"></div>
+                <button type="submit" class="login-btn">Unlock Vault</button>
+                <p style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 1rem;">
+                    Default Password: <strong>tarig2026</strong>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Vault -->
+    <div class="vault-container" id="vaultContainer">
+        <div class="vault-header">
+            <h1 class="vault-title">Personal Quotes</h1>
+            <div class="vault-controls">
+                <button onclick="toggleLanguage()" class="lang-toggle" id="langToggle">عربي</button>
+                <button onclick="openAddQuoteModal()" class="add-quote-btn">+ Add Quote</button>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="gallery" id="gallery">
+            <!-- Quotes will be injected here -->
+        </div>
+    </div>
+
+    <!-- Add Quote Modal -->
+    <div class="modal" id="addQuoteModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Add New Quote</h2>
+            <form onsubmit="handleAddQuote(event)">
+                <div class="form-group">
+                    <label class="form-label">Quote Text (EN)</label>
+                    <textarea id="quoteTextEN" class="form-textarea" placeholder="Your quote in English..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Quote Text (AR)</label>
+                    <textarea id="quoteTextAR" class="form-textarea" placeholder="اقتباسك بالعربية..." style="direction: rtl;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Font Style (EN)</label>
+                    <select id="fontEN" class="form-select">
+                        <option value="Segoe UI">Segoe UI</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Trebuchet MS">Trebuchet MS</option>
+                        <option value="Courier Prime">Courier Prime</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Font Style (AR)</label>
+                    <select id="fontAR" class="form-select">
+                        <option value="Droid Arabic Kufi">Kufi (كوفي)</option>
+                        <option value="Cairo">Cairo (كايرو)</option>
+                        <option value="Amiri">Amiri (أميري)</option>
+                        <option value="Reem Kufi">Reem Kufi (ريم كوفي)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Image</label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label">
+                            <input type="file" id="quoteImage" accept="image/*">
+                            <span>Click to upload or drag image here</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Video (Max 3 min)</label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label">
+                            <input type="file" id="quoteVideo" accept="video/*">
+                            <span>Click to upload or drag video here</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Voice Note (Max 3 min)</label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label">
+                            <input type="file" id="quoteVoice" accept="audio/*">
+                            <span>Click to upload or drag audio here</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Save Quote</button>
+                <button type="button" onclick="closeAddQuoteModal()" class="cancel-btn">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Quote Modal -->
+    <div class="modal" id="viewQuoteModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="viewQuoteTitle">Quote Details</h2>
+            <div id="viewQuoteContent"></div>
+            <button onclick="closeViewQuoteModal()" class="cancel-btn">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const VAULT_PASSWORD = 'tarig2026';
+        let currentLanguage = 'en';
+        let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('vaultPassword').value;
+            
+            if (password === VAULT_PASSWORD) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('vaultContainer').classList.add('active');
+                renderGallery();
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid password. Try again.';
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('vaultContainer').classList.remove('active');
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('vaultPassword').value = '';
+                document.getElementById('loginError').textContent = '';
+            }
+        }
+
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+            document.getElementById('langToggle').textContent = currentLanguage === 'en' ? 'عربي' : 'English';
+            renderGallery();
+        }
+
+        function openAddQuoteModal() {
+            document.getElementById('addQuoteModal').classList.add('active');
+        }
+
+        function closeAddQuoteModal() {
+            document.getElementById('addQuoteModal').classList.remove('active');
+            document.getElementById('addQuoteModal').querySelector('form').reset();
+        }
+
+        function handleAddQuote(e) {
+            e.preventDefault();
+            
+            const quote = {
+                id: Date.now(),
+                textEN: document.getElementById('quoteTextEN').value,
+                textAR: document.getElementById('quoteTextAR').value,
+                fontEN: document.getElementById('fontEN').value,
+                fontAR: document.getElementById('fontAR').value,
+                image: document.getElementById('quoteImage').files[0] ? URL.createObjectURL(document.getElementById('quoteImage').files[0]) : null,
+                video: document.getElementById('quoteVideo').files[0] ? URL.createObjectURL(document.getElementById('quoteVideo').files[0]) : null,
+                voice: document.getElementById('quoteVoice').files[0] ? URL.createObjectURL(document.getElementById('quoteVoice').files[0]) : null,
+                likes: 0,
+                comments: [],
+                createdAt: new Date().toISOString()
+            };
+
+            quotes.push(quote);
+            localStorage.setItem('quotes', JSON.stringify(quotes));
+            renderGallery();
+            closeAddQuoteModal();
+        }
+
+        function renderGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            quotes.forEach(quote => {
+                const card = document.createElement('div');
+                card.className = 'quote-card';
+                
+                const text = currentLanguage === 'en' ? quote.textEN : quote.textAR;
+                const font = currentLanguage === 'en' ? quote.fontEN : quote.fontAR;
+                const isArabic = currentLanguage === 'ar';
+
+                card.innerHTML = `
+                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${font}', sans-serif;">
+                        "${text}"
+                    </div>
+                    ${quote.image ? `<div class="quote-media"><img src="${quote.image}" alt="Quote image"></div>` : ''}
+                    ${quote.video ? `<div class="quote-media"><video controls><source src="${quote.video}" type="video/mp4"></video></div>` : ''}
+                    ${quote.voice ? `<div class="quote-media"><audio controls style="width: 100%;"><source src="${quote.voice}" type="audio/mpeg"></audio></div>` : ''}
+                    <div class="quote-meta">
+                        <span>${new Date(quote.createdAt).toLocaleDateString()}</span>
+                        <div class="quote-actions">
+                            <button class="action-btn heart-btn ${quote.likes > 0 ? 'liked' : ''}" onclick="likeQuote(${quote.id})">❤ ${quote.likes}</button>
+                            <button class="action-btn" onclick="viewQuoteDetails(${quote.id})">💬 ${quote.comments.length}</button>
+                        </div>
+                    </div>
+                    <div class="comments-section">
+                        ${quote.comments.map(c => `
+                            <div class="comment">
+                                <div class="comment-author">${c.author}</div>
+                                <div class="comment-text">${c.text}</div>
+                            </div>
+                        `).join('')}
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" placeholder="Add comment (300 chars)..." maxlength="300" id="comment-${quote.id}">
+                            <button class="comment-submit" onclick="addComment(${quote.id})">Post</button>
+                        </div>
+                    </div>
+                `;
+
+                gallery.appendChild(card);
+            });
+        }
+
+        function likeQuote(id) {
+            const quote = quotes.find(q => q.id === id);
+            if (quote) {
+                quote.likes++;
+                localStorage.setItem('quotes', JSON.stringify(quotes));
+                renderGallery();
+            }
+        }
+
+        function addComment(id) {
+            const input = document.getElementById(`comment-${id}`);
+            const text = input.value.trim();
+            
+            if (text) {
+                const quote = quotes.find(q => q.id === id);
+                if (quote) {
+                    quote.comments.push({
+                        author: 'Guest',
+                        text: text
+                    });
+                    localStorage.setItem('quotes', JSON.stringify(quotes));
+                    renderGallery();
+                }
+            }
+        }
+
+        function viewQuoteDetails(id) {
+            const quote = quotes.find(q => q.id === id);
+            if (quote) {
+                const text = currentLanguage === 'en' ? quote.textEN : quote.textAR;
+                const font = currentLanguage === 'en' ? quote.fontEN : quote.fontAR;
+                const isArabic = currentLanguage === 'ar';
+
+                document.getElementById('viewQuoteContent').innerHTML = `
+                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${font}', sans-serif; margin-bottom: 1.5rem;">
+                        "${text}"
+                    </div>
+                    ${quote.image ? `<div class="quote-media"><img src="${quote.image}" alt="Quote image"></div>` : ''}
+                    ${quote.video ? `<div class="quote-media"><video controls style="width: 100%;"><source src="${quote.video}" type="video/mp4"></video></div>` : ''}
+                    ${quote.voice ? `<div class="quote-media"><audio controls style="width: 100%;"><source src="${quote.voice}" type="audio/mpeg"></audio></div>` : ''}
+                    <div class="quote-meta" style="margin-top: 1.5rem;">
+                        <span>${new Date(quote.createdAt).toLocaleDateString()}</span>
+                        <div class="quote-actions">
+                            <button class="action-btn heart-btn ${quote.likes > 0 ? 'liked' : ''}" onclick="likeQuote(${quote.id})">❤ ${quote.likes}</button>
+                        </div>
+                    </div>
+                    <div class="comments-section">
+                        ${quote.comments.map(c => `
+                            <div class="comment">
+                                <div class="comment-author">${c.author}</div>
+                                <div class="comment-text">${c.text}</div>
+                            </div>
+                        `).join('')}
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" placeholder="Add comment (300 chars)..." maxlength="300" id="detail-comment-${quote.id}">
+                            <button class="comment-submit" onclick="addCommentFromDetail(${quote.id})">Post</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('viewQuoteModal').classList.add('active');
+            }
+        }
+
+        function addCommentFromDetail(id) {
+            const input = document.getElementById(`detail-comment-${id}`);
+            const text = input.value.trim();
+            
+            if (text) {
+                const quote = quotes.find(q => q.id === id);
+                if (quote) {
+                    quote.comments.push({
+                        author: 'Guest',
+                        text: text
+                    });
+                    localStorage.setItem('quotes', JSON.stringify(quotes));
+                    viewQuoteDetails(id);
+                }
+            }
+        }
+
+        function closeViewQuoteModal() {
+            document.getElementById('viewQuoteModal').classList.remove('active');
+        }
+
+        // Initialize
+        renderGallery();
+    </script>
+</body>
+</html>
