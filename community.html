@@ -34,9 +34,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             cursor: grab;
             user-select: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         }
         .moving-card.hidden { opacity: 0; pointer-events: none; }
+        .moving-card.pinned { border-color: #fbbf24; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3); }
+        .moving-card.highlighted { border-color: #ec4899; box-shadow: 0 0 30px rgba(236, 72, 153, 0.3); }
         .moving-card:active { cursor: grabbing; }
         .heart-btn {
             color: #ef4444;
@@ -127,6 +129,51 @@
             transition: all 0.3s;
         }
         .clear-btn:hover { border-color: #3b82f6; color: #3b82f6; }
+        .admin-panel {
+            position: fixed;
+            top: 8rem;
+            right: 2rem;
+            z-index: 99;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            width: 300px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .admin-title {
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #ec4899;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .admin-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: none;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+        .delete-btn { background: #ef4444; color: white; }
+        .delete-btn:hover { background: #dc2626; }
+        .pin-btn { background: #fbbf24; color: #000; }
+        .pin-btn:hover { background: #f59e0b; }
+        .highlight-btn { background: #ec4899; color: white; }
+        .highlight-btn:hover { background: #db2777; }
+        .details-btn { background: #3b82f6; color: white; }
+        .details-btn:hover { background: #2563eb; }
         .form-overlay {
             position: fixed;
             bottom: 2rem;
@@ -170,8 +217,10 @@
             padding: 2.5rem;
             width: 90%;
             max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-        input, textarea {
+        input, textarea, select {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 0.75rem;
@@ -181,7 +230,7 @@
             margin-bottom: 1rem;
             font-size: 0.875rem;
         }
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #3b82f6;
         }
@@ -200,6 +249,20 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: #3b82f6;
+        }
+        .details-modal {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .flag-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
         }
         ::-webkit-scrollbar {
             width: 6px;
@@ -264,6 +327,23 @@
         <button onclick="clearFilters()" class="clear-btn">Clear All</button>
     </div>
 
+    <!-- Admin Control Panel -->
+    <div class="admin-panel">
+        <label class="admin-title">Admin Controls</label>
+        <p class="text-[9px] text-slate-400 mb-4">Select a post to manage</p>
+        <div id="adminControls" style="display: none;">
+            <button onclick="deleteSelectedPost()" class="admin-btn delete-btn">Delete Post</button>
+            <button onclick="pinSelectedPost()" class="admin-btn pin-btn">Pin Post</button>
+            <button onclick="highlightSelectedPost()" class="admin-btn highlight-btn">Highlight Post</button>
+            <button onclick="viewPostDetails()" class="admin-btn details-btn">View Details</button>
+            <button onclick="clearSelection()" class="admin-btn" style="background: #64748b;">Clear Selection</button>
+        </div>
+        <div id="noSelection" style="text-align: center;">
+            <p class="text-[10px] text-slate-500 font-bold uppercase">No post selected</p>
+            <p class="text-[8px] text-slate-600 mt-2">Click on a card to select it</p>
+        </div>
+    </div>
+
     <div class="board-container" id="board">
         <!-- Cards will be injected here -->
     </div>
@@ -285,7 +365,9 @@
                 </div>
                 <input type="email" id="email" placeholder="Email Address" required>
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="text" id="country" placeholder="Country" required>
+                    <select id="country" required>
+                        <option value="">Select Country</option>
+                    </select>
                     <input type="url" id="linkedin" placeholder="LinkedIn Profile URL" required>
                 </div>
                 <input type="url" id="photo" placeholder="Photo URL (or LinkedIn Photo URL)">
@@ -296,7 +378,40 @@
         </div>
     </div>
 
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="details-modal">
+            <h2 class="text-2xl font-black uppercase mb-6 tracking-tighter">Post Details</h2>
+            <div id="detailsContent"></div>
+            <button onclick="closeDetailsModal()" class="w-full mt-6 bg-blue-600 py-3 rounded-xl font-black uppercase tracking-widest text-sm hover:bg-blue-500 transition">Close</button>
+        </div>
+    </div>
+
     <script>
+        // Country data with flags
+        const countryFlags = {
+            'Saudi Arabia': '🇸🇦',
+            'Egypt': '🇪🇬',
+            'Sudan': '🇸🇩',
+            'UAE': '🇦🇪',
+            'Kuwait': '🇰🇼',
+            'Qatar': '🇶🇦',
+            'Bahrain': '🇧🇭',
+            'Oman': '🇴🇲',
+            'Jordan': '🇯🇴',
+            'Lebanon': '🇱🇧',
+            'Pakistan': '🇵🇰',
+            'India': '🇮🇳',
+            'USA': '🇺🇸',
+            'UK': '🇬🇧',
+            'Canada': '🇨🇦',
+            'Australia': '🇦🇺',
+            'Germany': '🇩🇪',
+            'France': '🇫🇷',
+            'Singapore': '🇸🇬',
+            'Malaysia': '🇲🇾'
+        };
+
         const board = document.getElementById('board');
         let allPosts = [
             {
@@ -306,18 +421,26 @@
                 message: "Great work on the DCF models! The strategic alignment with Vision 2030 is impressive.",
                 likes: 12,
                 date: "2026-01-22",
-                photo: "https://ui-avatars.com/api/?name=Sample+Colleague&background=3b82f6&color=fff"
+                photo: "https://ui-avatars.com/api/?name=Sample+Colleague&background=3b82f6&color=fff",
+                pinned: false,
+                highlighted: false
             }
         ];
+
+        let selectedPostIndex = null;
 
         function createCard(post, index) {
             const card = document.createElement('div');
             card.className = 'moving-card';
+            if (post.pinned) card.classList.add('pinned');
+            if (post.highlighted) card.classList.add('highlighted');
             card.setAttribute('data-index', index);
             card.setAttribute('data-country', post.country);
             card.setAttribute('data-position', post.position);
             card.setAttribute('data-date', post.date);
             card.setAttribute('data-name', post.name.toLowerCase());
+            
+            const flag = countryFlags[post.country] || '🌍';
             
             card.innerHTML = `
                 <div class="flex items-center gap-4 mb-4">
@@ -330,7 +453,7 @@
                 <p class="text-xs text-slate-300 leading-relaxed mb-4 italic">"${post.message}"</p>
                 <div class="flex justify-between items-center border-t border-white/10 pt-3">
                     <div class="flex flex-col">
-                        <span class="text-[8px] text-slate-500 font-bold uppercase">${post.country}</span>
+                        <span class="text-[8px] text-slate-500 font-bold uppercase"><span class="flag-icon">${flag}</span>${post.country}</span>
                         <span class="text-[8px] text-slate-600 font-bold uppercase">${post.date}</span>
                     </div>
                     <div class="flex items-center gap-2" onclick="likePost(this)">
@@ -345,6 +468,8 @@
             const y = Math.random() * (window.innerHeight - 200);
             card.style.left = x + 'px';
             card.style.top = y + 'px';
+            
+            card.addEventListener('click', () => selectPost(index, card));
             
             board.appendChild(card);
             animateCard(card);
@@ -363,6 +488,83 @@
             });
         }
 
+        function selectPost(index, card) {
+            document.querySelectorAll('.moving-card').forEach(c => c.style.opacity = '0.5');
+            card.style.opacity = '1';
+            selectedPostIndex = index;
+            document.getElementById('adminControls').style.display = 'block';
+            document.getElementById('noSelection').style.display = 'none';
+        }
+
+        function clearSelection() {
+            document.querySelectorAll('.moving-card').forEach(c => c.style.opacity = '1');
+            selectedPostIndex = null;
+            document.getElementById('adminControls').style.display = 'none';
+            document.getElementById('noSelection').style.display = 'block';
+        }
+
+        function deleteSelectedPost() {
+            if (selectedPostIndex !== null) {
+                allPosts.splice(selectedPostIndex, 1);
+                location.reload();
+            }
+        }
+
+        function pinSelectedPost() {
+            if (selectedPostIndex !== null) {
+                allPosts[selectedPostIndex].pinned = !allPosts[selectedPostIndex].pinned;
+                const card = document.querySelector(`[data-index="${selectedPostIndex}"]`);
+                card.classList.toggle('pinned');
+            }
+        }
+
+        function highlightSelectedPost() {
+            if (selectedPostIndex !== null) {
+                allPosts[selectedPostIndex].highlighted = !allPosts[selectedPostIndex].highlighted;
+                const card = document.querySelector(`[data-index="${selectedPostIndex}"]`);
+                card.classList.toggle('highlighted');
+            }
+        }
+
+        function viewPostDetails() {
+            if (selectedPostIndex !== null) {
+                const post = allPosts[selectedPostIndex];
+                const flag = countryFlags[post.country] || '🌍';
+                const detailsContent = document.getElementById('detailsContent');
+                detailsContent.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <img src="${post.photo || 'https://ui-avatars.com/api/?name=' + post.name}" class="w-20 h-20 rounded-full border border-blue-500/30 object-cover">
+                            <div>
+                                <h3 class="text-xl font-black uppercase">${post.name}</h3>
+                                <p class="text-blue-400 font-bold">${post.position}</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Contact Information</p>
+                            <p class="text-sm mb-2"><strong>Email:</strong> ${post.email}</p>
+                            <p class="text-sm mb-2"><strong>Country:</strong> <span class="flag-icon">${flag}</span>${post.country}</p>
+                            <p class="text-sm"><strong>LinkedIn:</strong> <a href="${post.linkedin}" target="_blank" class="text-blue-400 hover:underline">View Profile</a></p>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Message</p>
+                            <p class="text-sm italic">"${post.message}"</p>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Engagement</p>
+                            <p class="text-sm">❤ ${post.likes} Likes</p>
+                            <p class="text-sm">📅 Posted: ${post.date}</p>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('detailsModal').classList.add('active');
+            }
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
         function likePost(el) {
             const countEl = el.querySelector('span:last-child');
             let count = parseInt(countEl.innerText);
@@ -370,19 +572,26 @@
             gsap.from(el.querySelector('.heart-btn'), { scale: 1.5, duration: 0.3 });
         }
 
-        function populateFilters() {
-            const countries = new Set(allPosts.map(p => p.country));
-            const positions = new Set(allPosts.map(p => p.position));
+        function populateCountries() {
+            const countrySelect = document.getElementById('country');
+            const filterCountry = document.getElementById('filterCountry');
+            
+            Object.keys(countryFlags).forEach(country => {
+                const option1 = document.createElement('option');
+                option1.value = country;
+                option1.textContent = countryFlags[country] + ' ' + country;
+                countrySelect.appendChild(option1);
 
-            const countrySelect = document.getElementById('filterCountry');
-            const positionSelect = document.getElementById('filterPosition');
-
-            countries.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country;
-                option.textContent = country;
-                countrySelect.appendChild(option);
+                const option2 = document.createElement('option');
+                option2.value = country;
+                option2.textContent = country;
+                filterCountry.appendChild(option2);
             });
+        }
+
+        function populateFilters() {
+            const positions = new Set(allPosts.map(p => p.position));
+            const positionSelect = document.getElementById('filterPosition');
 
             positions.forEach(position => {
                 const option = document.createElement('option');
@@ -420,7 +629,6 @@
                 }
             });
 
-            // Sort by date
             if (sortDate === 'oldest') {
                 cards.forEach(card => {
                     if (!card.classList.contains('hidden')) {
@@ -465,7 +673,9 @@
                 photo: document.getElementById('photo').value,
                 message: document.getElementById('message').value,
                 likes: 0,
-                date: new Date().toISOString().split('T')[0]
+                date: new Date().toISOString().split('T')[0],
+                pinned: false,
+                highlighted: false
             };
             allPosts.push(newPost);
             createCard(newPost, allPosts.length - 1);
@@ -476,6 +686,7 @@
         }
 
         // Initialize
+        populateCountries();
         allPosts.forEach((post, index) => createCard(post, index));
         populateFilters();
         document.getElementById('resultsCount').textContent = `Showing ${allPosts.length} post${allPosts.length !== 1 ? 's' : ''}`;
