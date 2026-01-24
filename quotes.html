@@ -135,11 +135,10 @@
             display: flex;
             gap: 1rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        .lang-toggle {
-            background: rgba(59, 130, 246, 0.8);
-            color: white;
+        .control-btn {
             padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             font-weight: 900;
@@ -148,40 +147,38 @@
             cursor: pointer;
             border: none;
             transition: all 0.3s;
-        }
-
-        .lang-toggle:hover {
-            background: #3b82f6;
         }
 
         .add-quote-btn {
             background: #22c55e;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
         }
 
         .add-quote-btn:hover {
             background: #16a34a;
         }
 
+        .whatsapp-btn {
+            background: #25d366;
+            color: white;
+        }
+
+        .whatsapp-btn:hover {
+            background: #1fa855;
+        }
+
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+        }
+
+        .telegram-btn:hover {
+            background: #006ba3;
+        }
+
         .logout-btn {
             background: #ef4444;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
         }
 
         .logout-btn:hover {
@@ -212,6 +209,19 @@
             transform: translateY(-5px);
         }
 
+        .quote-lang-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
         .quote-text {
             font-size: 1.1rem;
             line-height: 1.8;
@@ -233,7 +243,8 @@
         }
 
         .quote-media img,
-        .quote-media video {
+        .quote-media video,
+        .quote-media audio {
             width: 100%;
             height: auto;
             display: block;
@@ -270,6 +281,44 @@
 
         .heart-btn.liked {
             color: #ef4444;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .share-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .share-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .share-whatsapp:hover {
+            background: #1fa855;
+        }
+
+        .share-telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .share-telegram:hover {
+            background: #006ba3;
         }
 
         /* Modal */
@@ -508,9 +557,10 @@
         <div class="vault-header">
             <h1 class="vault-title">Personal Quotes</h1>
             <div class="vault-controls">
-                <button onclick="toggleLanguage()" class="lang-toggle" id="langToggle">عربي</button>
-                <button onclick="openAddQuoteModal()" class="add-quote-btn">+ Add Quote</button>
-                <button onclick="logout()" class="logout-btn">Logout</button>
+                <button onclick="openAddQuoteModal()" class="control-btn add-quote-btn">+ Add Quote</button>
+                <a href="https://wa.me/249908405604?text=Hi%20Tarig,%20I%20would%20like%20to%20update%20my%20quotes%20vault" target="_blank" class="control-btn whatsapp-btn">📱 WhatsApp</a>
+                <a href="https://t.me/AZRG_97" target="_blank" class="control-btn telegram-btn">✈️ Telegram</a>
+                <button onclick="logout()" class="control-btn logout-btn">Logout</button>
             </div>
         </div>
 
@@ -525,32 +575,23 @@
             <h2 class="modal-title">Add New Quote</h2>
             <form onsubmit="handleAddQuote(event)">
                 <div class="form-group">
-                    <label class="form-label">Quote Text (EN)</label>
-                    <textarea id="quoteTextEN" class="form-textarea" placeholder="Your quote in English..." required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Quote Text (AR)</label>
-                    <textarea id="quoteTextAR" class="form-textarea" placeholder="اقتباسك بالعربية..." style="direction: rtl;"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Font Style (EN)</label>
-                    <select id="fontEN" class="form-select">
-                        <option value="Segoe UI">Segoe UI</option>
-                        <option value="Georgia">Georgia</option>
-                        <option value="Trebuchet MS">Trebuchet MS</option>
-                        <option value="Courier Prime">Courier Prime</option>
+                    <label class="form-label">Select Language</label>
+                    <select id="quoteLanguage" class="form-select" required>
+                        <option value="">Choose Language</option>
+                        <option value="en">English (EN)</option>
+                        <option value="ar">العربية (AR)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Font Style (AR)</label>
-                    <select id="fontAR" class="form-select">
-                        <option value="Droid Arabic Kufi">Kufi (كوفي)</option>
-                        <option value="Cairo">Cairo (كايرو)</option>
-                        <option value="Amiri">Amiri (أميري)</option>
-                        <option value="Reem Kufi">Reem Kufi (ريم كوفي)</option>
+                    <label class="form-label">Quote Text</label>
+                    <textarea id="quoteText" class="form-textarea" placeholder="Write your quote here..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Font Style</label>
+                    <select id="fontStyle" class="form-select" required>
+                        <option value="">Select Font</option>
                     </select>
                 </div>
 
@@ -601,7 +642,23 @@
 
     <script>
         const VAULT_PASSWORD = 'tarig2026';
-        let currentLanguage = 'en';
+        const WHATSAPP_NUMBER = '249908405604';
+        const TELEGRAM_HANDLE = 'AZRG_97';
+
+        const englishFonts = [
+            { name: 'Segoe UI', value: 'Segoe UI' },
+            { name: 'Georgia', value: 'Georgia' },
+            { name: 'Trebuchet MS', value: 'Trebuchet MS' },
+            { name: 'Courier Prime', value: 'Courier Prime' }
+        ];
+
+        const arabicFonts = [
+            { name: 'Kufi (كوفي)', value: 'Droid Arabic Kufi' },
+            { name: 'Cairo (كايرو)', value: 'Cairo' },
+            { name: 'Amiri (أميري)', value: 'Amiri' },
+            { name: 'Reem Kufi (ريم كوفي)', value: 'Reem Kufi' }
+        ];
+
         let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
 
         function handleLogin(e) {
@@ -626,11 +683,31 @@
             }
         }
 
-        function toggleLanguage() {
-            currentLanguage = currentLanguage === 'en' ? 'ar' : 'en';
-            document.getElementById('langToggle').textContent = currentLanguage === 'en' ? 'عربي' : 'English';
-            renderGallery();
+        function updateFontOptions() {
+            const language = document.getElementById('quoteLanguage').value;
+            const fontSelect = document.getElementById('fontStyle');
+            fontSelect.innerHTML = '<option value="">Select Font</option>';
+
+            const fonts = language === 'ar' ? arabicFonts : englishFonts;
+            fonts.forEach(font => {
+                const option = document.createElement('option');
+                option.value = font.value;
+                option.textContent = font.name;
+                fontSelect.appendChild(option);
+            });
+
+            // Update textarea direction for Arabic
+            const textarea = document.getElementById('quoteText');
+            if (language === 'ar') {
+                textarea.style.direction = 'rtl';
+                textarea.style.textAlign = 'right';
+            } else {
+                textarea.style.direction = 'ltr';
+                textarea.style.textAlign = 'left';
+            }
         }
+
+        document.getElementById('quoteLanguage')?.addEventListener('change', updateFontOptions);
 
         function openAddQuoteModal() {
             document.getElementById('addQuoteModal').classList.add('active');
@@ -639,17 +716,18 @@
         function closeAddQuoteModal() {
             document.getElementById('addQuoteModal').classList.remove('active');
             document.getElementById('addQuoteModal').querySelector('form').reset();
+            document.getElementById('fontStyle').innerHTML = '<option value="">Select Font</option>';
         }
 
         function handleAddQuote(e) {
             e.preventDefault();
             
+            const language = document.getElementById('quoteLanguage').value;
             const quote = {
                 id: Date.now(),
-                textEN: document.getElementById('quoteTextEN').value,
-                textAR: document.getElementById('quoteTextAR').value,
-                fontEN: document.getElementById('fontEN').value,
-                fontAR: document.getElementById('fontAR').value,
+                text: document.getElementById('quoteText').value,
+                language: language,
+                font: document.getElementById('fontStyle').value,
                 image: document.getElementById('quoteImage').files[0] ? URL.createObjectURL(document.getElementById('quoteImage').files[0]) : null,
                 video: document.getElementById('quoteVideo').files[0] ? URL.createObjectURL(document.getElementById('quoteVideo').files[0]) : null,
                 voice: document.getElementById('quoteVoice').files[0] ? URL.createObjectURL(document.getElementById('quoteVoice').files[0]) : null,
@@ -672,13 +750,13 @@
                 const card = document.createElement('div');
                 card.className = 'quote-card';
                 
-                const text = currentLanguage === 'en' ? quote.textEN : quote.textAR;
-                const font = currentLanguage === 'en' ? quote.fontEN : quote.fontAR;
-                const isArabic = currentLanguage === 'ar';
+                const isArabic = quote.language === 'ar';
+                const langBadge = isArabic ? 'العربية' : 'English';
 
                 card.innerHTML = `
-                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${font}', sans-serif;">
-                        "${text}"
+                    <div class="quote-lang-badge">${langBadge}</div>
+                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${quote.font}', sans-serif;">
+                        "${quote.text}"
                     </div>
                     ${quote.image ? `<div class="quote-media"><img src="${quote.image}" alt="Quote image"></div>` : ''}
                     ${quote.video ? `<div class="quote-media"><video controls><source src="${quote.video}" type="video/mp4"></video></div>` : ''}
@@ -689,6 +767,10 @@
                             <button class="action-btn heart-btn ${quote.likes > 0 ? 'liked' : ''}" onclick="likeQuote(${quote.id})">❤ ${quote.likes}</button>
                             <button class="action-btn" onclick="viewQuoteDetails(${quote.id})">💬 ${quote.comments.length}</button>
                         </div>
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn share-whatsapp" onclick="shareToWhatsApp(${quote.id})">📱 Share</button>
+                        <button class="share-btn share-telegram" onclick="shareToTelegram(${quote.id})">✈️ Share</button>
                     </div>
                     <div class="comments-section">
                         ${quote.comments.map(c => `
@@ -734,16 +816,32 @@
             }
         }
 
+        function shareToWhatsApp(id) {
+            const quote = quotes.find(q => q.id === id);
+            if (quote) {
+                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Quotes Vault`);
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+            }
+        }
+
+        function shareToTelegram(id) {
+            const quote = quotes.find(q => q.id === id);
+            if (quote) {
+                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Quotes Vault`);
+                window.open(`https://t.me/share/url?url=&text=${text}`, '_blank');
+            }
+        }
+
         function viewQuoteDetails(id) {
             const quote = quotes.find(q => q.id === id);
             if (quote) {
-                const text = currentLanguage === 'en' ? quote.textEN : quote.textAR;
-                const font = currentLanguage === 'en' ? quote.fontEN : quote.fontAR;
-                const isArabic = currentLanguage === 'ar';
+                const isArabic = quote.language === 'ar';
+                const langBadge = isArabic ? 'العربية' : 'English';
 
                 document.getElementById('viewQuoteContent').innerHTML = `
-                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${font}', sans-serif; margin-bottom: 1.5rem;">
-                        "${text}"
+                    <div class="quote-lang-badge">${langBadge}</div>
+                    <div class="quote-text ${isArabic ? 'ar' : ''}" style="font-family: '${quote.font}', sans-serif; margin-bottom: 1.5rem;">
+                        "${quote.text}"
                     </div>
                     ${quote.image ? `<div class="quote-media"><img src="${quote.image}" alt="Quote image"></div>` : ''}
                     ${quote.video ? `<div class="quote-media"><video controls style="width: 100%;"><source src="${quote.video}" type="video/mp4"></video></div>` : ''}
@@ -753,6 +851,10 @@
                         <div class="quote-actions">
                             <button class="action-btn heart-btn ${quote.likes > 0 ? 'liked' : ''}" onclick="likeQuote(${quote.id})">❤ ${quote.likes}</button>
                         </div>
+                    </div>
+                    <div class="share-buttons">
+                        <button class="share-btn share-whatsapp" onclick="shareToWhatsApp(${quote.id})">📱 Share</button>
+                        <button class="share-btn share-telegram" onclick="shareToTelegram(${quote.id})">✈️ Share</button>
                     </div>
                     <div class="comments-section">
                         ${quote.comments.map(c => `
