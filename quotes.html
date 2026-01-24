@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Quotes Vault | Tarig Salah</title>
+    <title>Personal Portfolio | Tarig Salah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700;900&family=Courier+Prime&family=Georgia&family=Trebuchet+MS&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&family=IBM+Plex+Arabic&family=Almarai&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Droid+Arabic+Kufi&family=Reem+Kufi&family=IBM+Plex+Arabic&family=Almarai&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* Login Screen */
         .login-container {
             position: fixed;
             inset: 0;
@@ -103,18 +102,30 @@
             margin-bottom: 1rem;
         }
 
-        /* Main Vault */
-        .vault-container {
+        .login-link {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #3b82f6;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 0.5rem;
+        }
+
+        .login-link:hover {
+            color: #2563eb;
+        }
+
+        .portfolio-container {
             display: none;
             min-height: 100vh;
             padding: 2rem;
         }
 
-        .vault-container.active {
+        .portfolio-container.active {
             display: block;
         }
 
-        .vault-header {
+        .portfolio-header {
             max-width: 7xl;
             margin: 0 auto 3rem;
             display: flex;
@@ -124,14 +135,14 @@
             gap: 1rem;
         }
 
-        .vault-title {
+        .portfolio-title {
             font-size: 2.5rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .vault-controls {
+        .portfolio-controls {
             display: flex;
             gap: 1rem;
             align-items: center;
@@ -176,6 +187,15 @@
             background: #006ba3;
         }
 
+        .settings-btn {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .settings-btn:hover {
+            background: #7c3aed;
+        }
+
         .logout-btn {
             background: #ef4444;
             color: white;
@@ -185,7 +205,6 @@
             background: #dc2626;
         }
 
-        /* Gallery Grid */
         .gallery {
             max-width: 7xl;
             margin: 0 auto;
@@ -231,7 +250,6 @@
         }
 
         .quote-text.ar {
-            font-family: 'Droid Arabic Kufi', 'Cairo', serif;
             text-align: right;
             direction: rtl;
         }
@@ -321,7 +339,6 @@
             background: #006ba3;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -457,7 +474,6 @@
             color: #3b82f6;
         }
 
-        /* Comments Section */
         .comments-section {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -520,6 +536,16 @@
             background: #2563eb;
         }
 
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -539,12 +565,13 @@
     <!-- Login Screen -->
     <div class="login-container" id="loginContainer">
         <div class="login-box">
-            <h1 class="login-title">Quotes Vault</h1>
-            <p class="login-subtitle">Personal & Protected</p>
+            <h1 class="login-title">Personal Portfolio</h1>
+            <p class="login-subtitle">Secure & Protected</p>
             <form onsubmit="handleLogin(event)">
-                <input type="password" id="vaultPassword" class="login-input" placeholder="Enter Vault Password" required>
+                <input type="password" id="vaultPassword" class="login-input" placeholder="Enter Portfolio Password" required>
                 <div class="login-error" id="loginError"></div>
-                <button type="submit" class="login-btn">Unlock Vault</button>
+                <button type="submit" class="login-btn">Unlock Portfolio</button>
+                <div class="login-link" onclick="openForgotPasswordModal()">Forgot Password?</div>
                 <p style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 1rem;">
                     Default Password: <strong>tarig2026</strong>
                 </p>
@@ -552,14 +579,15 @@
         </div>
     </div>
 
-    <!-- Main Vault -->
-    <div class="vault-container" id="vaultContainer">
-        <div class="vault-header">
-            <h1 class="vault-title">Personal Quotes</h1>
-            <div class="vault-controls">
+    <!-- Main Portfolio -->
+    <div class="portfolio-container" id="portfolioContainer">
+        <div class="portfolio-header">
+            <h1 class="portfolio-title">Personal Portfolio</h1>
+            <div class="portfolio-controls">
                 <button onclick="openAddQuoteModal()" class="control-btn add-quote-btn">+ Add Quote</button>
-                <a href="https://wa.me/249908405604?text=Hi%20Tarig,%20I%20would%20like%20to%20update%20my%20quotes%20vault" target="_blank" class="control-btn whatsapp-btn">📱 WhatsApp</a>
+                <a href="https://wa.me/249908405604?text=Hi%20Tarig,%20I%20would%20like%20to%20update%20my%20portfolio" target="_blank" class="control-btn whatsapp-btn">📱 WhatsApp</a>
                 <a href="https://t.me/AZRG_97" target="_blank" class="control-btn telegram-btn">✈️ Telegram</a>
+                <button onclick="openSettingsModal()" class="control-btn settings-btn">⚙️ Settings</button>
                 <button onclick="logout()" class="control-btn logout-btn">Logout</button>
             </div>
         </div>
@@ -631,6 +659,47 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Settings</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Change Password</label>
+                <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+                <button onclick="changePassword()" class="submit-btn" style="margin-top: 0.75rem;">Update Password</button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Telegram Bot Setup</label>
+                <div class="info-box">
+                    <strong>To set up your Telegram bot:</strong><br><br>
+                    1. Open Telegram and search for <strong>@BotFather</strong><br>
+                    2. Send <strong>/newbot</strong> and follow the instructions<br>
+                    3. Copy your bot token and paste it below<br>
+                    4. Your bot will receive quotes directly to your portfolio<br><br>
+                    <strong>Bot Token:</strong>
+                </div>
+                <input type="text" id="botToken" class="form-input" placeholder="Paste your Telegram Bot Token here">
+                <button onclick="saveBotToken()" class="submit-btn" style="margin-top: 0.75rem;">Save Bot Token</button>
+            </div>
+
+            <button type="button" onclick="closeSettingsModal()" class="cancel-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-content">
+            <h2 class="modal-title">Password Recovery</h2>
+            <div class="info-box">
+                To recover your password, please contact <strong>Tarig.ti.salah@gmail.com</strong> with your request. You'll need to verify your identity before we reset your password.
+            </div>
+            <a href="mailto:Tarig.ti.salah@gmail.com?subject=Portfolio%20Password%20Recovery&body=I%20need%20to%20recover%20my%20Portfolio%20password" class="submit-btn" style="text-align: center; text-decoration: none; display: block;">Send Recovery Email</a>
+            <button type="button" onclick="closeForgotPasswordModal()" class="cancel-btn">Back to Login</button>
+        </div>
+    </div>
+
     <!-- View Quote Modal -->
     <div class="modal" id="viewQuoteModal">
         <div class="modal-content">
@@ -644,6 +713,7 @@
         const VAULT_PASSWORD = 'tarig2026';
         const WHATSAPP_NUMBER = '249908405604';
         const TELEGRAM_HANDLE = 'AZRG_97';
+        const RECOVERY_EMAIL = 'Tarig.ti.salah@gmail.com';
 
         const englishFonts = [
             { name: 'Segoe UI', value: 'Segoe UI' },
@@ -656,18 +726,21 @@
             { name: 'Kufi (كوفي)', value: 'Droid Arabic Kufi' },
             { name: 'Cairo (كايرو)', value: 'Cairo' },
             { name: 'Amiri (أميري)', value: 'Amiri' },
-            { name: 'Reem Kufi (ريم كوفي)', value: 'Reem Kufi' }
+            { name: 'Reem Kufi (ريم كوفي)', value: 'Reem Kufi' },
+            { name: 'IBM Plex Arabic', value: 'IBM Plex Arabic' },
+            { name: 'Almarai (الماراي)', value: 'Almarai' }
         ];
 
         let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
+        let currentPassword = localStorage.getItem('portfolioPassword') || VAULT_PASSWORD;
 
         function handleLogin(e) {
             e.preventDefault();
             const password = document.getElementById('vaultPassword').value;
             
-            if (password === VAULT_PASSWORD) {
+            if (password === currentPassword) {
                 document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('vaultContainer').classList.add('active');
+                document.getElementById('portfolioContainer').classList.add('active');
                 renderGallery();
             } else {
                 document.getElementById('loginError').textContent = 'Invalid password. Try again.';
@@ -676,10 +749,49 @@
 
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                document.getElementById('vaultContainer').classList.remove('active');
+                document.getElementById('portfolioContainer').classList.remove('active');
                 document.getElementById('loginContainer').style.display = 'flex';
                 document.getElementById('vaultPassword').value = '';
                 document.getElementById('loginError').textContent = '';
+            }
+        }
+
+        function openForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').classList.add('active');
+        }
+
+        function closeForgotPasswordModal() {
+            document.getElementById('forgotPasswordModal').classList.remove('active');
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function changePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            if (newPassword && newPassword.length >= 6) {
+                currentPassword = newPassword;
+                localStorage.setItem('portfolioPassword', newPassword);
+                alert('Password updated successfully!');
+                document.getElementById('newPassword').value = '';
+            } else {
+                alert('Password must be at least 6 characters long.');
+            }
+        }
+
+        function saveBotToken() {
+            const botToken = document.getElementById('botToken').value;
+            if (botToken) {
+                localStorage.setItem('telegramBotToken', botToken);
+                alert('Bot token saved! Your Telegram bot is now connected to your portfolio.');
+                document.getElementById('botToken').value = '';
+            } else {
+                alert('Please enter a valid bot token.');
             }
         }
 
@@ -696,7 +808,6 @@
                 fontSelect.appendChild(option);
             });
 
-            // Update textarea direction for Arabic
             const textarea = document.getElementById('quoteText');
             if (language === 'ar') {
                 textarea.style.direction = 'rtl';
@@ -819,7 +930,7 @@
         function shareToWhatsApp(id) {
             const quote = quotes.find(q => q.id === id);
             if (quote) {
-                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Quotes Vault`);
+                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Personal Portfolio`);
                 window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
             }
         }
@@ -827,7 +938,7 @@
         function shareToTelegram(id) {
             const quote = quotes.find(q => q.id === id);
             if (quote) {
-                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Quotes Vault`);
+                const text = encodeURIComponent(`📝 "${quote.text}"\n\nFrom: Tarig Salah's Personal Portfolio`);
                 window.open(`https://t.me/share/url?url=&text=${text}`, '_blank');
             }
         }
@@ -894,7 +1005,6 @@
             document.getElementById('viewQuoteModal').classList.remove('active');
         }
 
-        // Initialize
         renderGallery();
     </script>
 </body>
