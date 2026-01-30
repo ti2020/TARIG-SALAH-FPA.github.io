@@ -45,11 +45,11 @@
         const chartConfig = {
             type: 'radar',
             data: {
-                labels: ['FINANCIAL\nMODELLING', 'DCF\nANALYSIS', 'BUDGETING', 'RATIO\nANALYSIS', 'MARKET\nADVISORY'],
+                labels: ['THREE MODELING\nSTATEMENTS ANALYSIS', 'VALUATION\nMODELLING', 'RISK & SENSITIVITY\nANALYSIS', 'PROJECT FINANCE\nMODELLING', 'CREDIT RISK\nMODELLING'],
                 datasets: [
                     {
                         label: 'Current Expertise',
-                        data: [98, 96, 92, 90, 85],
+                        data: [97, 88, 80, 84, 80],
                         backgroundColor: 'rgba(59, 130, 246, 0.15)',
                         borderColor: '#3b82f6',
                         borderWidth: 3,
@@ -63,7 +63,7 @@
                     },
                     {
                         label: 'Target Excellence',
-                        data: [100, 100, 98, 95, 92],
+                        data: [99, 96, 91, 94, 92],
                         backgroundColor: 'rgba(34, 197, 94, 0.05)',
                         borderColor: '#22c55e',
                         borderWidth: 2,
@@ -159,6 +159,9 @@
         });
 
         observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        const isDarkMode = document.body.classList.contains('secure-mode');
+        
+        
     </script>
 </body>
 </html>
