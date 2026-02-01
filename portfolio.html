@@ -147,9 +147,54 @@
             background: rgba(59, 130, 246, 1);
             transform: scale(1.1);
         }
+        
+        /* WhatsApp Button Styles */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+            font-size: 28px;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #20ba5a;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 640px) {
+            .whatsapp-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 55px;
+                height: 55px;
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- WhatsApp Community Button -->
+    <a href="https://chat.whatsapp.com/YOUR_WHATSAPP_LINK" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" title="Join modeller Hub SD on WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </a>
 
     <div class="parallax-bg" id="parallax"></div>
 
