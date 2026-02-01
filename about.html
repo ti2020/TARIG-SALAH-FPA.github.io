@@ -42,7 +42,14 @@
         /* Image wrapper with edit button */
         .image-wrapper {
             position: relative;
-            display: inline-block;
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            overflow: visible;
+        }
+        
+        .image-wrapper .section-image {
+            display: block;
             width: 100%;
         }
         
@@ -52,19 +59,19 @@
             right: 1rem;
             background: #3b82f6;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.25rem;
             border-radius: 0.5rem;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             opacity: 0;
             transition: opacity 0.3s ease, background 0.3s ease;
             border: none;
-            z-index: 10;
+            z-index: 100;
         }
         
         .image-wrapper:hover .edit-btn {
-            opacity: 1;
+            opacity: 1 !important;
         }
         
         .edit-btn:hover {
