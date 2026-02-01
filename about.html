@@ -38,6 +38,114 @@
         #vault .section-image {
             object-position: center 20%;
         }
+        
+        /* Image wrapper with edit button */
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .edit-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            border: none;
+            z-index: 10;
+        }
+        
+        .image-wrapper:hover .edit-btn {
+            opacity: 1;
+        }
+        
+        .edit-btn:hover {
+            background: #2563eb;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid #3b82f6;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 1rem 0;
+            background: #1e293b;
+            border: 1px solid #3b82f6;
+            border-radius: 0.5rem;
+            color: white;
+            box-sizing: border-box;
+        }
+        
+        .modal button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .modal button:hover {
+            background: #2563eb;
+        }
+        
+        #photoPreview {
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        #previewImg {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body class="antialiased scroll-smooth">
@@ -58,7 +166,10 @@
         <div class="flex flex-col lg:flex-row items-center gap-16">
             <!-- Photo -->
             <div class="lg:w-1/2 w-full">
-                <img src="photo-1.jpg" alt="Tarig Salah - Professional Photo" class="section-image" />
+                <div class="image-wrapper">
+                    <img id="photo1" src="photo-1.jpg" alt="Tarig Salah - Professional Photo" class="section-image" />
+                    <button class="edit-btn" onclick="openEditModal('photo1')">✎ Edit</button>
+                </div>
             </div>
             
             <!-- Text Content -->
@@ -88,7 +199,10 @@
             <div class="flex flex-col lg:flex-row items-center gap-16 mb-16">
                 <!-- Photo -->
                 <div class="lg:w-1/2 w-full">
-                    <img src="photo-2.jpg" alt="Tarig Salah - Experience" class="section-image" />
+                    <div class="image-wrapper">
+                        <img id="photo2" src="photo-2.jpg" alt="Tarig Salah - Experience" class="section-image" />
+                        <button class="edit-btn" onclick="openEditModal('photo2')">✎ Edit</button>
+                    </div>
                 </div>
                 
                 <!-- Heading -->
@@ -128,7 +242,10 @@
                 
                 <!-- Photo -->
                 <div class="lg:w-1/2 w-full">
-                    <img src="photo-3.jpg" alt="Tarig Salah - Credentials" class="section-image" />
+                    <div class="image-wrapper">
+                        <img id="photo3" src="photo-3.jpg" alt="Tarig Salah - Credentials" class="section-image" />
+                        <button class="edit-btn" onclick="openEditModal('photo3')">✎ Edit</button>
+                    </div>
                 </div>
             </div>
             
@@ -195,7 +312,10 @@
             <div class="flex flex-col lg:flex-row items-center gap-16 justify-center mb-12">
                 <!-- Photo -->
                 <div class="lg:w-1/3 w-full">
-                    <img src="photo-4.jpg" alt="Tarig Salah - Vault" class="section-image" />
+                    <div class="image-wrapper">
+                        <img id="photo4" src="photo-4.jpg" alt="Tarig Salah - Vault" class="section-image" />
+                        <button class="edit-btn" onclick="openEditModal('photo4')">✎ Edit</button>
+                    </div>
                 </div>
                 
                 <!-- Content -->
@@ -211,8 +331,69 @@
         </div>
     </section>
 
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeEditModal()">✕</button>
+            <h2 style="color: #3b82f6; margin-bottom: 1rem; font-weight: bold;">Edit Photo</h2>
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem;">Photo URL:</label>
+            <input type="text" id="photoUrl" placeholder="Enter image URL" />
+            <div id="photoPreview">
+                <img id="previewImg" src="" alt="Preview" />
+            </div>
+            <button onclick="savePhoto()">Save Photo</button>
+            <button onclick="closeEditModal()" style="background: #475569;">Cancel</button>
+        </div>
+    </div>
+
     <footer class="p-12 text-center border-t border-slate-900">
         <p class="text-[8px] font-bold text-slate-600 uppercase tracking-[0.8em]">Proprietary AFM Logic • Tarig Salah • 2026</p>
     </footer>
+    
+    <script>
+        let currentEditingImage = null;
+        
+        function openEditModal(imageId) {
+            currentEditingImage = imageId;
+            document.getElementById('editModal').classList.add('active');
+            document.getElementById('photoUrl').value = '';
+            document.getElementById('photoPreview').style.display = 'none';
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            currentEditingImage = null;
+        }
+        
+        function savePhoto() {
+            const url = document.getElementById('photoUrl').value.trim();
+            if (!url) {
+                alert('Please enter a valid image URL');
+                return;
+            }
+            
+            const img = document.getElementById(currentEditingImage);
+            img.src = url;
+            closeEditModal();
+        }
+        
+        // Preview image as user types
+        document.getElementById('photoUrl').addEventListener('input', function(e) {
+            const url = e.target.value.trim();
+            if (url) {
+                const preview = document.getElementById('photoPreview');
+                const previewImg = document.getElementById('previewImg');
+                previewImg.src = url;
+                preview.style.display = 'block';
+            }
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
 </body>
 </html>
