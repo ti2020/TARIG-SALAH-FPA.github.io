@@ -159,6 +159,110 @@
             background: rgba(15, 23, 42, 0.95);
         }
         
+        /* Inline Text Editor Styles */
+        .editable-text {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .editable-text:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            margin: -0.25rem -0.5rem;
+        }
+        
+        .editable-text.editing {
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            margin: -0.25rem -0.5rem;
+        }
+        
+        .edit-icon {
+            display: inline-block;
+            margin-left: 0.25rem;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .editable-text:hover .edit-icon {
+            opacity: 1;
+        }
+        
+        .inline-editor {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.98);
+            border: 2px solid #3b82f6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            z-index: 1000;
+            min-width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .inline-editor input,
+        .inline-editor textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: white;
+            font-family: inherit;
+            margin-bottom: 0.75rem;
+        }
+        
+        .inline-editor textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .inline-editor input:focus,
+        .inline-editor textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .inline-editor-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .inline-editor-buttons button {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .inline-editor-buttons .save-btn {
+            background: #22c55e;
+            color: white;
+        }
+        
+        .inline-editor-buttons .save-btn:hover {
+            background: #16a34a;
+        }
+        
+        .inline-editor-buttons .cancel-btn {
+            background: transparent;
+            color: #3b82f6;
+            border: 1px solid #3b82f6;
+        }
+        
+        .inline-editor-buttons .cancel-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
         /* WhatsApp Button Styles */
         .whatsapp-btn {
             position: fixed;
@@ -368,8 +472,8 @@
     
     <main class="pt-64 pb-20 px-8 max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-20">
         <div class="lg:w-1/2">
-            <h1 class="text-7xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase mb-8">Clarity in <br><span class="text-blue-600 italic">Complexity.</span></h1>
-            <p class="text-lg text-slate-500 italic border-l-2 border-blue-600 pl-6">Bridging institutional DCF analysis with strategic growth.</p>
+            <h1 class="text-7xl md:text-8xl font-black leading-[0.9] tracking-tighter uppercase mb-8 editable-text" data-type="heading" data-key="mainTitle">Clarity in <br><span class="text-blue-600 italic">Complexity.</span><span class="edit-icon">✏️</span></h1>
+            <p class="text-lg text-slate-500 italic border-l-2 border-blue-600 pl-6 editable-text" data-type="paragraph" data-key="mainSubtitle">Bridging institutional DCF analysis with strategic growth.<span class="edit-icon">✏️</span></p>
         </div>
         <div class="lg:w-1/2 w-full glass p-10 rounded-[4rem] shadow-2xl">
             <div class="radar-container" id="radarContainer" style="height: 600px;">
@@ -417,7 +521,7 @@
         const chartConfig = {
             type: 'radar',
             data: {
-                labels: ['THREE\nMODELING\nSTATEMENTS', 'VALUATION\nMODELLING', 'RISK &\nSENSITIVITY\nANALYSIS', 'PROJECT\nFINANCE\nMODELLING', 'CREDIT\nRISK\nMODELLING'],
+                labels: ['3-STMT\nANALYSIS', 'VALUATION', 'RISK &\nSENSITIVITY', 'PROJECT\nFINANCE', 'CREDIT\nRISK'],
                 datasets: [
                     {
                         label: 'Current Expertise',
@@ -457,7 +561,7 @@
                         display: true,
                         position: 'bottom',
                         labels: {
-                            font: { size: 12, weight: '900' },
+                            font: { size: 11, weight: '900' },
                             color: isDarkMode ? '#f8fafc' : '#0f172a',
                             padding: 20,
                             usePointStyle: true,
@@ -493,15 +597,15 @@
                         min: 0,
                         max: 100,
                         ticks: {
-                            stepSize: 20,
-                            font: { size: 9, weight: '700' },
+                            stepSize: 25,
+                            font: { size: 8, weight: '700' },
                             color: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)',
                             backdropColor: 'transparent'
                         },
                         pointLabels: {
-                            font: { size: 12, weight: '900' },
+                            font: { size: 11, weight: '900' },
                             color: isDarkMode ? '#3b82f6' : '#2563eb',
-                            padding: 20
+                            padding: 25
                         },
                         grid: {
                             color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
@@ -532,7 +636,7 @@
         function updateChartFontSize() {
             const size = document.getElementById('fontSize').value;
             document.getElementById('fontValue').textContent = size + 'px';
-            chartConfig.options.scales.r.pointLabels.font.size = parseInt(size);
+            chartConfig.options.scales.r.pointLabels.font.size = Math.max(parseInt(size) - 1, 8);
             chartConfig.options.plugins.legend.labels.font.size = parseInt(size);
             radarChart.destroy();
             radarChart = new Chart(ctx, chartConfig);
@@ -582,6 +686,127 @@
             radarChart.destroy();
             radarChart = new Chart(ctx, chartConfig);
         }
+
+        // Inline Text Editor Functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.editable-text') && !e.target.closest('.inline-editor')) {
+                const element = e.target.closest('.editable-text');
+                if (!element.classList.contains('editing')) {
+                    openInlineEditor(element);
+                }
+            }
+        });
+        
+        function openInlineEditor(element) {
+            const key = element.dataset.key;
+            const type = element.dataset.type;
+            const currentText = element.textContent.replace('✏️', '').trim();
+            
+            // Remove existing editor if any
+            const existingEditor = document.querySelector('.inline-editor');
+            if (existingEditor) existingEditor.remove();
+            
+            const editor = document.createElement('div');
+            editor.className = 'inline-editor';
+            
+            const inputField = type === 'heading' ? 
+                `<input type="text" id="editorInput" value="${currentText}" placeholder="Edit text...">` :
+                `<textarea id="editorInput" placeholder="Edit text...">${currentText}</textarea>`;
+            
+            editor.innerHTML = `
+                ${inputField}
+                <div class="inline-editor-buttons">
+                    <button class="save-btn" onclick="saveInlineEdit('${key}', '${type}')">Save</button>
+                    <button class="cancel-btn" onclick="closeInlineEditor()">Cancel</button>
+                </div>
+            `;
+            
+            element.classList.add('editing');
+            element.appendChild(editor);
+            
+            const input = document.getElementById('editorInput');
+            input.focus();
+            input.select();
+            
+            // Save on Enter (for single-line inputs)
+            if (type === 'heading') {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        saveInlineEdit(key, type);
+                    }
+                });
+            }
+            
+            // Cancel on Escape
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeInlineEditor();
+                }
+            });
+        }
+        
+        function saveInlineEdit(key, type) {
+            const input = document.getElementById('editorInput');
+            const newText = input.value.trim();
+            const element = document.querySelector(`[data-key="${key}"]`);
+            
+            if (newText) {
+                if (type === 'heading') {
+                    // For heading with special formatting
+                    if (key === 'mainTitle') {
+                        const parts = newText.split('\n');
+                        element.innerHTML = `${parts[0]} <br><span class="text-blue-600 italic">${parts[1] || 'Complexity.'}</span><span class="edit-icon">✏️</span>`;
+                    } else {
+                        element.innerHTML = `${newText}<span class="edit-icon">✏️</span>`;
+                    }
+                } else {
+                    element.textContent = newText;
+                    element.innerHTML += '<span class="edit-icon">✏️</span>';
+                }
+                
+                // Save to localStorage
+                const pageContent = JSON.parse(localStorage.getItem('pageContent') || '{}');
+                pageContent[key] = newText;
+                localStorage.setItem('pageContent', JSON.stringify(pageContent));
+            }
+            
+            closeInlineEditor();
+        }
+        
+        function closeInlineEditor() {
+            const editor = document.querySelector('.inline-editor');
+            if (editor) {
+                const element = editor.closest('.editable-text');
+                element.classList.remove('editing');
+                editor.remove();
+            }
+        }
+        
+        // Load saved content from localStorage
+        function loadSavedContent() {
+            const pageContent = JSON.parse(localStorage.getItem('pageContent') || '{}');
+            Object.keys(pageContent).forEach(key => {
+                const element = document.querySelector(`[data-key="${key}"]`);
+                if (element) {
+                    const type = element.dataset.type;
+                    const newText = pageContent[key];
+                    if (type === 'heading') {
+                        if (key === 'mainTitle') {
+                            const parts = newText.split('\n');
+                            element.innerHTML = `${parts[0]} <br><span class="text-blue-600 italic">${parts[1] || 'Complexity.'}</span><span class="edit-icon">✏️</span>`;
+                        } else {
+                            element.innerHTML = `${newText}<span class="edit-icon">✏️</span>`;
+                        }
+                    } else {
+                        element.textContent = newText;
+                        element.innerHTML += '<span class="edit-icon">✏️</span>';
+                    }
+                }
+            });
+        }
+        
+        // Load saved content on page load
+        loadSavedContent();
 
         // Re-render chart when dark mode is toggled
         const observer = new MutationObserver(() => {
