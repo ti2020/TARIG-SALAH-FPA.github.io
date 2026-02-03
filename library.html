@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TARIG Library Model | Financial Models & Resources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        * { font-family: 'Inter', sans-serif; }
+        body { 
+            background: #020617; 
+            color: #f8fafc; 
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-line {
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #10b981, #3b82f6);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+        
+        .model-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .model-card:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .model-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .model-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .excel-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .model-content {
+            padding: 1.5rem;
+        }
+        
+        .model-category {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .model-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-white;
+        }
+        
+        .model-description {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .download-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: #60a5fa;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+        }
+        
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .btn-primary {
+            flex: 1;
+            background: #22c55e;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #16a34a;
+        }
+        
+        .btn-secondary {
+            flex: 1;
+            background: transparent;
+            color: #3b82f6;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: 1px solid #3b82f6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .admin-panel {
+            position: fixed;
+            bottom-20 right-8;
+            background: #0f172a;
+            border: 2px solid #3b82f6;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            z-index: 999;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+            display: none;
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+        
+        .admin-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+        
+        .admin-btn {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: #2563eb;
+        }
+        
+        .admin-btn.danger {
+            background: #ef4444;
+        }
+        
+        .admin-btn.danger:hover {
+            background: #dc2626;
+        }
+        
+        .filter-btn {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .filter-btn:hover {
+            border-color: #3b82f6;
+        }
+        
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .thank-you-message.active {
+            display: block;
+        }
+        
+        .thank-you-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .thank-you-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #22c55e;
+        }
+        
+        .thank-you-subtext {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Gradient Line -->
+    <div class="gradient-line"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-4 left-0 right-0 z-50 px-8">
+        <div class="max-w-6xl mx-auto flex justify-between items-center glass p-4 rounded-[2rem]">
+            <div class="flex flex-col">
+                <span class="text-lg font-black tracking-tighter uppercase">TARIG Library</span>
+                <span class="text-[7px] font-bold tracking-[0.5em] text-blue-600 uppercase">Model Gallery</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-[9px] font-bold uppercase tracking-widest hover:text-blue-600 transition">← Back Home</a>
+                <button onclick="toggleAdminPanel()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-[9px] font-bold uppercase">⚙️ Admin</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-32 pb-20 px-8 max-w-6xl mx-auto">
+        <!-- Header -->
+        <section class="mb-12">
+            <h1 class="text-5xl md:text-6xl font-black uppercase mb-4 tracking-tighter">TARIG Library Model</h1>
+            <p class="text-slate-400 text-lg mb-8">Access professional financial models and resources. Download after verification.</p>
+            
+            <!-- Filters -->
+            <div class="mb-8">
+                <p class="text-sm font-bold text-blue-500 uppercase mb-3">Filter by Category:</p>
+                <div id="filterContainer"></div>
+            </div>
+            
+            <!-- Search -->
+            <input type="text" id="searchInput" placeholder="Search models..." class="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 mb-8">
+        </section>
+        
+        <!-- Models Grid -->
+        <section id="modelsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Models will be inserted here -->
+        </section>
+    </main>
+    
+    <!-- Download Form Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <div id="formContent">
+                <h2 class="modal-title">Download Model</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">WhatsApp Number *</label>
+                    <input type="tel" id="whatsappInput" class="form-input" placeholder="+966 50 123 4567" required>
+                    <small style="color: #94a3b8; margin-top: 0.25rem; display: block;">Please confirm you're a member of "modeller Hub SD" community</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Name *</label>
+                    <input type="text" id="nameInput" class="form-input" placeholder="Your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" id="emailInput" class="form-input" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-primary" onclick="submitDownloadForm()">Proceed to Download</button>
+                    <button class="btn-secondary" onclick="closeDownloadModal()">Cancel</button>
+                </div>
+            </div>
+            
+            <div id="thankYouContent" class="thank-you-message">
+                <div class="thank-you-icon">✅</div>
+                <div class="thank-you-text">Thank You!</div>
+                <div class="thank-you-subtext">Your information has been saved. Redirecting to download...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <h3 class="admin-title">Admin Panel</h3>
+        
+        <button class="admin-btn" onclick="showAddModelForm()">+ Add New Model</button>
+        <button class="admin-btn" onclick="downloadCollectedData()">📥 Download Data</button>
+        <button class="admin-btn danger" onclick="clearAllData()">🗑️ Clear All Data</button>
+        
+        <hr style="border-color: rgba(59, 130, 246, 0.2); margin: 1rem 0;">
+        
+        <h4 style="color: #60a5fa; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; text-transform: uppercase;">Existing Models:</h4>
+        <div id="modelsList"></div>
+    </div>
+    
+    <!-- Add Model Modal -->
+    <div id="addModelModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Add New Model</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Model Name *</label>
+                <input type="text" id="modelName" class="form-input" placeholder="e.g., DCF Valuation Model">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Category *</label>
+                <input type="text" id="modelCategory" class="form-input" placeholder="e.g., Valuation Models">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Description *</label>
+                <textarea id="modelDescription" class="form-input" placeholder="Brief summary of the model..." style="resize: vertical; min-height: 80px;"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Cover Image URL (optional)</label>
+                <input type="url" id="modelImage" class="form-input" placeholder="https://...">
+                <small style="color: #94a3b8; margin-top: 0.25rem; display: block;">Leave blank for Excel icon</small>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Google Drive Link *</label>
+                <input type="url" id="modelLink" class="form-input" placeholder="https://drive.google.com/...">
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn-primary" onclick="saveNewModel()">Save Model</button>
+                <button class="btn-secondary" onclick="closeAddModelModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://lnkd.in/dBir95J3" target="_blank" class="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white rounded-full w-16 h-16 flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition transform hover:scale-110 z-40" title="Join modeller Hub SD on WhatsApp">
+        💬
+    </a>
+    
+    <script>
+        // Data Management
+        function getModels() {
+            return JSON.parse(localStorage.getItem('models') || '[]');
+        }
+        
+        function saveModels(models) {
+            localStorage.setItem('models', JSON.stringify(models));
+            renderModels();
+            updateFilters();
+        }
+        
+        function getDownloads() {
+            return JSON.parse(localStorage.getItem('downloads') || '[]');
+        }
+        
+        function saveDownloads(downloads) {
+            localStorage.setItem('downloads', JSON.stringify(downloads));
+        }
+        
+        // Render Models
+        function renderModels() {
+            const models = getModels();
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active')?.textContent || '';
+            
+            const filtered = models.filter(model => {
+                const matchesSearch = model.name.toLowerCase().includes(searchTerm) || 
+                                    model.description.toLowerCase().includes(searchTerm);
+                const matchesFilter = !activeFilter || model.category === activeFilter;
+                return matchesSearch && matchesFilter;
+            });
+            
+            const grid = document.getElementById('modelsGrid');
+            grid.innerHTML = filtered.map(model => `
+                <div class="model-card">
+                    <div class="model-cover">
+                        ${model.image ? `<img src="${model.image}" alt="${model.name}">` : `<div class="excel-icon">📊</div>`}
+                    </div>
+                    <div class="model-content">
+                        <div class="model-category">${model.category}</div>
+                        <div class="model-title">${model.name}</div>
+                        <div class="model-description">${model.description}</div>
+                        <button class="download-btn" onclick="openDownloadModal('${model.id}', '${model.name}', '${model.link}')">
+                            Download Model
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-center; padding: 3rem; color: #94a3b8;">No models found. Try adjusting your filters.</div>';
+            }
+        }
+        
+        // Update Filters
+        function updateFilters() {
+            const models = getModels();
+            const categories = [...new Set(models.map(m => m.category))];
+            
+            const filterContainer = document.getElementById('filterContainer');
+            filterContainer.innerHTML = categories.map(cat => `
+                <button class="filter-btn" onclick="filterByCategory(this, '${cat}')">${cat}</button>
+            `).join('');
+        }
+        
+        function filterByCategory(btn, category) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderModels();
+        }
+        
+        // Download Modal
+        let currentModelId = '';
+        let currentModelLink = '';
+        
+        function openDownloadModal(id, name, link) {
+            currentModelId = id;
+            currentModelLink = link;
+            document.getElementById('downloadModal').classList.add('active');
+            document.getElementById('formContent').style.display = 'block';
+            document.getElementById('thankYouContent').classList.remove('active');
+        }
+        
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('active');
+            document.getElementById('whatsappInput').value = '';
+            document.getElementById('nameInput').value = '';
+            document.getElementById('emailInput').value = '';
+        }
+        
+        function submitDownloadForm() {
+            const whatsapp = document.getElementById('whatsappInput').value.trim();
+            const name = document.getElementById('nameInput').value.trim();
+            const email = document.getElementById('emailInput').value.trim();
+            
+            if (!whatsapp || !name || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Save download record
+            const downloads = getDownloads();
+            downloads.push({
+                modelId: currentModelId,
+                whatsapp,
+                name,
+                email,
+                timestamp: new Date().toISOString()
+            });
+            saveDownloads(downloads);
+            
+            // Show thank you message
+            document.getElementById('formContent').style.display = 'none';
+            document.getElementById('thankYouContent').classList.add('active');
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.open(currentModelLink, '_blank');
+                closeDownloadModal();
+            }, 2000);
+        }
+        
+        // Admin Functions
+        function toggleAdminPanel() {
+            document.getElementById('adminPanel').classList.toggle('active');
+        }
+        
+        function showAddModelForm() {
+            document.getElementById('addModelModal').classList.add('active');
+        }
+        
+        function closeAddModelModal() {
+            document.getElementById('addModelModal').classList.remove('active');
+            document.getElementById('modelName').value = '';
+            document.getElementById('modelCategory').value = '';
+            document.getElementById('modelDescription').value = '';
+            document.getElementById('modelImage').value = '';
+            document.getElementById('modelLink').value = '';
+        }
+        
+        function saveNewModel() {
+            const name = document.getElementById('modelName').value.trim();
+            const category = document.getElementById('modelCategory').value.trim();
+            const description = document.getElementById('modelDescription').value.trim();
+            const image = document.getElementById('modelImage').value.trim();
+            const link = document.getElementById('modelLink').value.trim();
+            
+            if (!name || !category || !description || !link) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const models = getModels();
+            models.push({
+                id: Date.now().toString(),
+                name,
+                category,
+                description,
+                image,
+                link
+            });
+            
+            saveModels(models);
+            closeAddModelModal();
+            alert('Model added successfully!');
+        }
+        
+        function downloadCollectedData() {
+            const downloads = getDownloads();
+            
+            if (downloads.length === 0) {
+                alert('No download data collected yet');
+                return;
+            }
+            
+            // Create CSV
+            let csv = 'Timestamp,Model ID,WhatsApp,Name,Email\n';
+            downloads.forEach(d => {
+                csv += `"${d.timestamp}","${d.modelId}","${d.whatsapp}","${d.name}","${d.email}"\n`;
+            });
+            
+            // Download
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `model-downloads-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+        
+        function clearAllData() {
+            if (confirm('Are you sure? This will delete all models and download data.')) {
+                localStorage.removeItem('models');
+                localStorage.removeItem('downloads');
+                renderModels();
+                updateFilters();
+                alert('All data cleared');
+            }
+        }
+        
+        // Search
+        document.getElementById('searchInput').addEventListener('input', renderModels);
+        
+        // Initialize
+        renderModels();
+        updateFilters();
+    </script>
+</body>
+</html>
