@@ -23,9 +23,16 @@ The default admin password is: **`tarig2030`**
 > **⚠️ IMPORTANT**: Change this password immediately in the `admin.js` file for security!
 
 ```javascript
-// In admin.js, line 8:
+// In admin.js, line 7:
 const ADMIN_PASSWORD = 'tarig2030'; // Change this to a secure password
 ```
+
+### 🔑 Forgot Your Password?
+
+If you forget your password:
+1. Click the **"🔑 Forgot Password?"** button in the login modal.
+2. Enter your registered email: **`tarig.ti.salah@gmail.com`**.
+3. Follow the on-screen instructions to reset your password via your GitHub repository.
 
 ## Using the Admin Panel
 

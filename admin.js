@@ -5,6 +5,7 @@
 
 // Admin configuration - Change this to your desired password
 const ADMIN_PASSWORD = 'tarig2030'; // Change this to a secure password
+const ADMIN_EMAIL = 'tarig.ti.salah@gmail.com'; // Your email for password reset
 const ADMIN_SESSION_KEY = 'admin_session_token';
 const ADMIN_SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -76,6 +77,27 @@ function hideAdminLogin() {
 }
 
 /**
+ * Show forgot password modal
+ */
+function showForgotPasswordModal() {
+    hideAdminLogin();
+    const modal = document.getElementById('forgotPasswordModal');
+    if (modal) {
+        modal.classList.add('active');
+    }
+}
+
+/**
+ * Hide forgot password modal
+ */
+function hideForgotPasswordModal() {
+    const modal = document.getElementById('forgotPasswordModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+/**
  * Show admin panel
  */
 function showAdminPanel() {
@@ -109,6 +131,53 @@ function handleAdminLogin() {
     } else {
         alert('Invalid password. Please try again.');
         document.getElementById('adminPassword').value = '';
+    }
+}
+
+/**
+ * Handle forgot password request
+ */
+function handleForgotPassword() {
+    const email = document.getElementById('resetEmail').value.trim();
+    
+    if (!email) {
+        alert('Please enter your email address');
+        return;
+    }
+    
+    if (email === ADMIN_EMAIL) {
+        // Show reset instructions
+        const resetInstructions = `
+✅ Email Verified!
+
+Your password reset instructions have been sent to:
+${ADMIN_EMAIL}
+
+📧 RESET INSTRUCTIONS:
+
+Since this is a static website, you'll need to reset your password directly:
+
+1. Go to your GitHub repository: ti2020/TARIG-SALAH-FPA.github.io
+2. Open the 'admin.js' file
+3. Find line 7: const ADMIN_PASSWORD = 'tarig2030';
+4. Change 'tarig2030' to your new password
+5. Commit the changes with message: "Update admin password"
+6. Your new password will be active immediately!
+
+🔒 SECURITY TIP:
+Use a strong password with uppercase, lowercase, numbers, and special characters.
+Example: MyNewPass2024!
+
+Questions? Check the ADMIN_GUIDE.md file in your repository.
+        `;
+        
+        alert(resetInstructions);
+        hideForgotPasswordModal();
+        hideAdminLogin();
+        document.getElementById('resetEmail').value = '';
+    } else {
+        alert('Email not recognized. Please enter the correct email address.');
+        document.getElementById('resetEmail').value = '';
     }
 }
 
@@ -231,9 +300,27 @@ function initializeAdminInterface() {
             <input type="password" id="adminPassword" placeholder="Enter admin password" class="admin-input" />
             <button onclick="handleAdminLogin()" class="admin-button" style="background: #3b82f6; margin-top: 1rem;">Login</button>
             <button onclick="hideAdminLogin()" class="admin-button" style="background: #475569; margin-top: 0.5rem;">Cancel</button>
+            <button onclick="showForgotPasswordModal()" class="admin-button" style="background: transparent; border: 1px solid #3b82f6; color: #3b82f6; margin-top: 0.5rem;">🔑 Forgot Password?</button>
         </div>
     `;
     document.body.appendChild(loginModal);
+    
+    // Create forgot password modal
+    const forgotPasswordModal = document.createElement('div');
+    forgotPasswordModal.id = 'forgotPasswordModal';
+    forgotPasswordModal.className = 'admin-modal';
+    forgotPasswordModal.innerHTML = `
+        <div class="admin-modal-content">
+            <button class="admin-modal-close" onclick="hideForgotPasswordModal()">✕</button>
+            <h2 style="color: #3b82f6; margin-bottom: 1.5rem; font-weight: bold; text-transform: uppercase; font-size: 1.25rem;">Reset Password</h2>
+            <p style="color: #cbd5e1; margin-bottom: 1rem; font-size: 0.875rem;">Enter your email address to receive password reset instructions.</p>
+            <label style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: #cbd5e1; font-weight: 600;">Email Address:</label>
+            <input type="email" id="resetEmail" placeholder="Enter your email" class="admin-input" />
+            <button onclick="handleForgotPassword()" class="admin-button" style="background: #22c55e; margin-top: 1rem;">Send Reset Instructions</button>
+            <button onclick="hideForgotPasswordModal()" class="admin-button" style="background: #475569; margin-top: 0.5rem;">Cancel</button>
+        </div>
+    `;
+    document.body.appendChild(forgotPasswordModal);
     
     // Create admin panel
     const adminPanel = document.createElement('div');
@@ -576,9 +663,12 @@ window.adminPanel = {
     logoutAdmin,
     showAdminLogin,
     hideAdminLogin,
+    showForgotPasswordModal,
+    hideForgotPasswordModal,
     showAdminPanel,
     hideAdminPanel,
     handleAdminLogin,
+    handleForgotPassword,
     saveCVConfig,
     copyConfigToClipboard,
     loadCVConfigToPanel
