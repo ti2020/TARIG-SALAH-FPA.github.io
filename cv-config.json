@@ -1,0 +1,11 @@
+{
+  "cv": {
+    "default": "https://read.litera-reader.com/?source=eb4eb920145d9ffc91f627db1db30639ed6a7e22fdd56a733a393ccf21734ee2&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=b798f1edcd45eb5315276de3031aa5e66cf2104024bd245778abd89267019c74",
+    "about": "https://read.litera-reader.com/?source=705a85088efba920e2b93f44fb0325905135f30271a244b04f10de6c2f9e9ced&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=0dcf9fec2beba80d2210f7e2aadc95e1f22c4a45bbe77ce13491226741e816e5",
+    "vimeo": "https://read.litera-reader.com/?source=cafd349543aa1ca884fb420ad6ec706e24b87163f3fa966f1303d2649564da4b&client_key=i1zb7rXXfTgFmkIakh0m&extension=pdf&signature=1ea1ad8f354675783557f5724e37d0890f94b5ed71f06f0b65ab3aaef071008f"
+  },
+  "metadata": {
+    "lastUpdated": "2026-02-22",
+    "version": "1.0"
+  }
+}
